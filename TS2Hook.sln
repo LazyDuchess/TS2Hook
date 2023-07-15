@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.32630.194
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TS2Hook", "TS2Hook\TS2Hook.vcxproj", "{C2AD7EA6-3DD1-40D0-BFE3-04F1499CB2A5}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestScript", "TestScript\TestScript.vcxproj", "{52AE14FC-3A19-455C-9174-E7F298821E0E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{C2AD7EA6-3DD1-40D0-BFE3-04F1499CB2A5}.Release|x64.Build.0 = Release|x64
 		{C2AD7EA6-3DD1-40D0-BFE3-04F1499CB2A5}.Release|x86.ActiveCfg = Release|Win32
 		{C2AD7EA6-3DD1-40D0-BFE3-04F1499CB2A5}.Release|x86.Build.0 = Release|Win32
+		{52AE14FC-3A19-455C-9174-E7F298821E0E}.Debug|x64.ActiveCfg = Debug|x64
+		{52AE14FC-3A19-455C-9174-E7F298821E0E}.Debug|x64.Build.0 = Debug|x64
+		{52AE14FC-3A19-455C-9174-E7F298821E0E}.Debug|x86.ActiveCfg = Debug|Win32
+		{52AE14FC-3A19-455C-9174-E7F298821E0E}.Debug|x86.Build.0 = Debug|Win32
+		{52AE14FC-3A19-455C-9174-E7F298821E0E}.Release|x64.ActiveCfg = Release|x64
+		{52AE14FC-3A19-455C-9174-E7F298821E0E}.Release|x64.Build.0 = Release|x64
+		{52AE14FC-3A19-455C-9174-E7F298821E0E}.Release|x86.ActiveCfg = Release|Win32
+		{52AE14FC-3A19-455C-9174-E7F298821E0E}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

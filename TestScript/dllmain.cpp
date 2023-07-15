@@ -1,6 +1,9 @@
 // dllmain.cpp : Defines the entry point for the DLL application.
 #include "pch.h"
-#include "ScriptManager.h"
+#include "TestScript.h"
+#include "../TS2Hook/ScriptManager.h"
+
+static TestScript gTestScript;
 
 BOOL APIENTRY DllMain( HMODULE hModule,
                        DWORD  ul_reason_for_call,
@@ -10,8 +13,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
     switch (ul_reason_for_call)
     {
     case DLL_PROCESS_ATTACH:
-        DisableThreadLibraryCalls(hModule);
-        ScriptManager::Initialize(hModule);
+        ScriptManager::Register(&gTestScript);
         break;
     case DLL_THREAD_ATTACH:
     case DLL_THREAD_DETACH:

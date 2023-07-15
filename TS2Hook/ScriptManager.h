@@ -6,5 +6,5 @@ class DllExport ScriptManager
 {
 public:
 	static void Register(Script* script);
-	static void Update();
+	static void Initialize(HMODULE hModule);
 };
