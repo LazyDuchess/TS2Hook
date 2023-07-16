@@ -8,6 +8,7 @@ namespace nTSSG {
 			((func*)0x00aab480)(this);
 		}
 		// TODO
+	private:
 		virtual void QueryInterface();
 		virtual void AddRef();
 		virtual void Release();
@@ -27,16 +28,19 @@ namespace nTSSG {
 		virtual void FindTerrainColour();
 		virtual void FindTerrainColour2();
 		virtual void SetAutoLightingActive();
+	public:
 		virtual void SetLightingState(char* state);
 		virtual void ForceLightingUpdate();
+	private:
 		virtual void AddBlobToHeightMap();
 		virtual void ApplyLightSettingOverridesFromFile();
+	public:
 		virtual char* LightingState();
 
 	};
 	class cTSSGSystem
 	{
-	public:
+	private:
 		// TODO
 		virtual void QueryInterface();
 		virtual void AddRef();
@@ -54,9 +58,13 @@ namespace nTSSG {
 		virtual void fn10();
 		virtual void fn11();
 		virtual void SetObjectModule();
+	public:
 		virtual void AnimationTimerAdjustment(int value);
+	private: 
 		virtual void OncePerFrameUpdate();
+	public:
 		virtual void SetFramePeriodOverride(int value);
+	private:
 		virtual void PreLoadLot();
 		virtual void PostLoadLot();
 		virtual void LoadPermanentAnimationCache();
@@ -87,7 +95,9 @@ namespace nTSSG {
 		virtual void QueryStrategyManager();
 		virtual void LightRigManager();
 		virtual void LightMapManager();
+	public:
 		virtual cLightingManager* LightingManager();
+	private:
 		virtual void ShadowManager();
 		virtual void HomeAnimManager();
 		virtual void HomeAnimTimer();

@@ -24,10 +24,11 @@ namespace TS {
 	};
 
 	class cTSCheatSystem {
-	public:
+	private:
 		virtual void Queryinterface();
 		virtual void AddRef();
 		virtual void Release();
+	public:
 		virtual cTSCheatParser* AsParser();
 	};
 
@@ -38,7 +39,7 @@ namespace TS {
 	}
 
 	class cTSNeighborhood {
-	public:
+	private:
 		// TODO
 		virtual void Queryinterface();
 		virtual void AddRef();
@@ -51,10 +52,12 @@ namespace TS {
 		virtual void Save();
 		virtual void IsStoryAlbumInLocalSpace();
 		virtual void MarkStoryAlbumIsInLocalSpace();
+	public:
 		// Check these.
 		virtual cTSNeighborhood* GetPrimaryNeighborhood();
 		virtual void SetPrimaryNeighborhood(cTSNeighborhood* primaryNeighborhood);
 		// TODO
+	private:
 		virtual void GetNeighborhoodGroupData();
 		virtual void SetNeighborhoodGroupData();
 		virtual void GetNeighborhoodInfo();
@@ -73,7 +76,7 @@ namespace TS {
 	};
 
 	class cTSGlobals {
-	public:
+	private:
 		char pad[28];
 		void* Simulator;
 		char pad2[12];
@@ -91,7 +94,7 @@ namespace TS {
 	}
 
 	class cTSLotInfo {
-	public:
+	private:
 		// TODO - very different from MAC, likely very inaccurate.
 		virtual void QueryInterface();
 		virtual void AddRef();
@@ -104,11 +107,13 @@ namespace TS {
 		virtual void GetBaseLotInfo();
 		virtual void Clone();
 
+	public:
 		// Probs done?
 		virtual void SetLocation(int x, int y);
 		virtual void GetLocation(int* x, int* y);
 		virtual void GetCurrentSize(int* x, int* y);
 
+	private:
 		// TODO
 		virtual void GetBoundingRect();
 		virtual void GetBoundingRectExcludingRoads();
@@ -119,6 +124,7 @@ namespace TS {
 		//virtual void SetLotGroupName(cRZString* name);
 		//virtual char* LotGroupName();
 
+	public:
 		// TODO
 		virtual float NhoodToLotHeightOffset();
 		virtual void SetNHoodToLotHeightOffset(float offset);
@@ -128,7 +134,7 @@ namespace TS {
 	};
 
 	class cTSGameStateController {
-	public:
+	private:
 		// TODO - Also check the NonConst stuff.
 		virtual void QueryInterface();
 		virtual void AddRef();
@@ -139,16 +145,21 @@ namespace TS {
 		virtual void CurrentNeighborhoodInfo();
 		virtual void CurrentNeighborhoodInfoNonConst();
 		virtual void NextNeighborhoodInfo();
+	public:
 		virtual cTSLotInfo* CurrentLotInfo();
 		virtual cTSLotInfo* CurrentLotInfoNonConst();
+	private:
 		virtual void GetCurrentLotGroupID();
 		virtual void GetCurrentLotID();
+	public:
 		virtual cTSLotInfo* NextLotInfo();
+	private:
 		virtual void CurrentFamily();
 		virtual void FamilyIDToMoveIn();
 		virtual void CurrentFamilyNonConst();
 		virtual void LastNeighborhoodInfo();
 		// DONE
+	public:
 		virtual bool InCommunityLot();
 		virtual bool InCASLot();
 		virtual bool InSecretLot();
