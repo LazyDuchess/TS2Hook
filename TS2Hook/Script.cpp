@@ -2,3 +2,4 @@
 #include "Script.h"
 
 void Script::Update() {}
+void Script::Draw() {}

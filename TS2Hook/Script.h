@@ -3,4 +3,5 @@
 class DllExport Script {
 public:
 	virtual void Update();
+	virtual void Draw();
 };
