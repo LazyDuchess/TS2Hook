@@ -160,6 +160,7 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Scenegraph.h" />
     <ClInclude Include="Script.h" />
     <ClInclude Include="ScriptManager.h" />
     <ClInclude Include="Types.h" />

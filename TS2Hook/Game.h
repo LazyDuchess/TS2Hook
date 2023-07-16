@@ -5,12 +5,37 @@ int SwapLot(int lotID, int neighborhoodID)
 	return ((t_swaplot*)0x0093c710)(lotID, neighborhoodID);
 }
 
-class cRZString {
+// This is likely NOT it.
+class cTSString {
 public:
-
+	char* str;
+	virtual void Func();
 };
 
 namespace TS {
+
+	// Temporary.
+	class cTSCheatParser {
+	public:
+		void ExecuteCommand(char* command) {
+			typedef void func(cTSCheatParser*, char*);
+			return ((func*)0x00b211b0)(this, command);
+		};
+	};
+
+	class cTSCheatSystem {
+	public:
+		virtual void Queryinterface();
+		virtual void AddRef();
+		virtual void Release();
+		virtual cTSCheatParser* AsParser();
+	};
+
+	cTSCheatSystem* CheatSystem()
+	{
+		typedef cTSCheatSystem* func(void);
+		return ((func*)0x00cd4260)();
+	}
 
 	class cTSNeighborhood {
 	public:
@@ -67,11 +92,11 @@ namespace TS {
 
 	class cTSLotInfo {
 	public:
-		// TODO
+		// TODO - very different from MAC, likely very inaccurate.
 		virtual void QueryInterface();
 		virtual void AddRef();
 		virtual void Release();
-		virtual void Destructor1();
+		//virtual void Destructor1();
 		virtual void Destructor2();
 		virtual void RemoveRef();
 		virtual void RefCount();
@@ -81,25 +106,25 @@ namespace TS {
 
 		// Probs done?
 		virtual void SetLocation(int x, int y);
-		virtual void GetLocation(int& x, int& y);
-		virtual void GetCurrentSize(int& x, int& y);
+		virtual void GetLocation(int* x, int* y);
+		virtual void GetCurrentSize(int* x, int* y);
 
 		// TODO
 		virtual void GetBoundingRect();
 		virtual void GetBoundingRectExcludingRoads();
 		virtual void GetBoundingRectForRoads();
 
-		// Verify these
+		// Not actually sure what's in here
 		virtual void SetLotGroupName(char* name);
-		virtual void SetLotGroupName(cRZString* name);
-		virtual char* LotGroupName();
+		//virtual void SetLotGroupName(cRZString* name);
+		//virtual char* LotGroupName();
 
 		// TODO
-		virtual void SetNHoodToLotHeightOffset(float offset);
 		virtual float NhoodToLotHeightOffset();
-		virtual void SetLotID(int lotId);
+		virtual void SetNHoodToLotHeightOffset(float offset);
 		virtual int LotID();
-		virtual char* LotName();
+		virtual cTSString* LotName();
+		virtual void SetLotID(int lotId);
 	};
 
 	class cTSGameStateController {

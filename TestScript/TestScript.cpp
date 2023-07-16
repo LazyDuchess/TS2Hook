@@ -3,6 +3,7 @@
 #include <string>
 #include "../TS2Hook/Game.h"
 #include "../TS2Hook/Drawing.h"
+#include "../TS2Hook/Scenegraph.h"
 
 bool KeyPressed(int vKey)
 {
@@ -16,9 +17,9 @@ bool KeyDown(int vKey)
 
 void TestScript::Update()
 {
+    TS::cTSGameStateController* pGameStateController = TS::GameStateController();
     if (KeyPressed(VK_ADD))
     {
-        TS::cTSGameStateController* pGameStateController = TS::GameStateController();
         if (pGameStateController != nullptr)
         {
             bool saveEnabled = pGameStateController->SaveLotEnabled();
@@ -32,6 +33,49 @@ void TestScript::Update()
     {
         // Go to pleasantview
         SwapLot(0, 1);
+    }
+    if (KeyPressed(VK_NUMPAD1))
+    {
+        nTSSG::cTSSGSystem* sgSystem = TS::SGSystem();
+        if (sgSystem != nullptr)
+        {
+            nTSSG::cLightingManager* lightingManager = sgSystem->LightingManager();
+            if (lightingManager != nullptr)
+            {
+                char state[] = "CAS";
+                lightingManager->SetLightingState(state);
+            }
+        }
+    }
+    if (KeyPressed(VK_NUMPAD0))
+    {
+        nTSSG::cTSSGSystem* sgSystem = TS::SGSystem();
+        if (sgSystem != nullptr)
+        {
+            nTSSG::cLightingManager* lightingManager = sgSystem->LightingManager();
+            if (lightingManager != nullptr)
+            {
+                lightingManager->UpdateLightingState();
+                //char state[] = "neighborhoodnight";
+                //lightingManager->SetLightingState(state);
+            }
+        }
+    }
+    if (KeyPressed(VK_HOME))
+    {
+        TS::cTSCheatSystem* cheatSystem = TS::CheatSystem();
+        if (cheatSystem != nullptr)
+        {
+            char cheat[] = "terrainType Desert";
+            TS::cTSCheatParser* cheatParser = cheatSystem->AsParser();
+            cheatParser->ExecuteCommand(cheat);
+        }
+        /*
+        TS::cTSLotInfo* lotInfo = pGameStateController->CurrentLotInfo();
+        if (lotInfo != nullptr)
+        {
+            lotInfo->SetLocation(20, 20);
+        }*/
     }
 }
 
@@ -50,16 +94,56 @@ void TestScript::Draw()
         TS::cTSLotInfo* lotInfo = pGameStateController->CurrentLotInfo();
         if (lotInfo != nullptr)
         {
-            char* lotName = lotInfo->LotName();
+            int lotID = lotInfo->LotID();
+            cTSString* lotName = lotInfo->LotName();
+            std::wstring ws(lotName->str, lotName->str + strlen(lotName->str));
+            infoString.append(L"Lot Name: ");
+            infoString.append(ws);
+            infoString.append(L"\n");
+            infoString.append(L"Lot ID: ");
+            infoString.append(std::to_wstring(lotID));
+            infoString.append(L"\n");
+            int lotXSize = 0;
+            int lotYSize = 0;
+            lotInfo->GetCurrentSize(&lotXSize, &lotYSize);
+            infoString.append(L"Lot Size:");
+            infoString.append(L"\n");
+            infoString.append(L"X:");
+            infoString.append(std::to_wstring(lotXSize));
+            infoString.append(L"\n");
+            infoString.append(L"Y:");
+            infoString.append(std::to_wstring(lotYSize));
+            infoString.append(L"\n");
+            infoString.append(L"\n");
+        }
+        nTSSG::cTSSGSystem* sgSystem = TS::SGSystem();
+        if (sgSystem != nullptr)
+        {
+            nTSSG::cLightingManager* lightingManager = sgSystem->LightingManager();
+            if (lightingManager != nullptr)
+            {
+                infoString.append(L"Lighting State: ");
+                char* lightState = lightingManager->LightingState();
+                std::wstring ws2(lightState, lightState + strlen(lightState));
+                infoString.append(ws2);
+                infoString.append(L"\n");
+            }
+        }
+        
+        /*
+        TS::cTSLotInfo* lotInfo = pGameStateController->CurrentLotInfo();
+        if (lotInfo != nullptr)
+        {
+            int lotId = lotInfo->LotID();
             infoString.append(L"In a Lot: ");
-            infoString.append(std::to_wstring((DWORD)&lotName));
+            infoString.append(std::to_wstring(lotId));
             infoString.append(L"\n");
         }
         else
         {
             infoString.append(L"Not in a Lot");
             infoString.append(L"\n");
-        }
+        }*/
     }
     else
     {
