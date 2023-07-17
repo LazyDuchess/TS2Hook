@@ -49,17 +49,15 @@ void TestScript::Update()
     }
     if (KeyPressed(VK_NUMPAD0))
     {
-        nTSSG::cTSSGSystem* sgSystem = TS::SGSystem();
-        if (sgSystem != nullptr)
-        {
-            nTSSG::cLightingManager* lightingManager = sgSystem->LightingManager();
-            if (lightingManager != nullptr)
-            {
-                lightingManager->UpdateLightingState();
-                //char state[] = "neighborhoodnight";
-                //lightingManager->SetLightingState(state);
-            }
-        }
+        TS::cTSGlobals* pGlobals = TS::Globals();
+        TS::cEdithObjectModule* pObjectManager = pGlobals->ObjectManager();
+        TS::cTSPerson* pSelectedPerson = pObjectManager->GetSelectedPerson();
+        TS::cEdithObject* pSelectedPersonAsObject = pSelectedPerson->AsObject();
+        int selectedPersonID = pSelectedPersonAsObject->GetID();
+        // Behavior basically defines the scope of where the game will look for the BHAV. So in its private, semiglobal or global.
+        TS::cTSBehavior* pBehavior = pSelectedPersonAsObject->GetBehavior();
+        char bhavName[] = "DEBUG - Force Twins";
+        pSelectedPersonAsObject->RunTree(pBehavior, selectedPersonID, bhavName, 0, 0, 0, 0);
     }
     if (KeyPressed(VK_HOME))
     {
@@ -79,6 +77,16 @@ void TestScript::Update()
     }
 }
 
+// Convert an UTF8 string to a wide Unicode String
+std::wstring utf8_decode(const std::string& str)
+{
+    if (str.empty()) return std::wstring();
+    int size_needed = MultiByteToWideChar(CP_UTF8, 0, &str[0], (int)str.size(), NULL, 0);
+    std::wstring wstrTo(size_needed, 0);
+    MultiByteToWideChar(CP_UTF8, 0, &str[0], (int)str.size(), &wstrTo[0], size_needed);
+    return wstrTo;
+}
+
 void TestScript::Draw()
 {
     TS::cTSGameStateController* pGameStateController = TS::GameStateController();
@@ -96,9 +104,10 @@ void TestScript::Draw()
         {
             int lotID = lotInfo->LotID();
             cTSString* lotName = lotInfo->LotName();
-            std::wstring ws(lotName->str, lotName->str + strlen(lotName->str));
+            std::wstring wcs = utf8_decode(std::string(lotName->str));
+            //std::wstring ws(lotName->str, lotName->str + strlen(lotName->str));
             infoString.append(L"Lot Name: ");
-            infoString.append(ws);
+            infoString.append(wcs);
             infoString.append(L"\n");
             infoString.append(L"Lot ID: ");
             infoString.append(std::to_wstring(lotID));
