@@ -24,6 +24,9 @@
     <ClInclude Include="TestScript.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TestCheat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -33,6 +36,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TestScript.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestCheat.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

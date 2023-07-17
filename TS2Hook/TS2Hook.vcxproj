@@ -157,6 +157,7 @@
   <ItemGroup>
     <ClInclude Include="D3DHook.h" />
     <ClInclude Include="Drawing.h" />
+    <ClInclude Include="Encoding.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Game.h" />
@@ -168,6 +169,8 @@
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Drawing.cpp" />
+    <ClCompile Include="Encoding.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

@@ -1,9 +1,13 @@
 #include "pch.h"
-#include "TestScript.h"
-#include <string>
 #include "../TS2Hook/Game.h"
 #include "../TS2Hook/Drawing.h"
 #include "../TS2Hook/Scenegraph.h"
+#include "../TS2Hook/Encoding.h"
+#include "TestScript.h"
+#include "TestCheat.h"
+#include <string>
+
+static TestCheat gTestCheat;
 
 bool KeyPressed(int vKey)
 {
@@ -34,6 +38,17 @@ void TestScript::Update()
         // Go to pleasantview
         SwapLot(0, 1);
     }
+    if (KeyPressed(VK_NUMPAD2))
+    {
+        TS::cTSCheatSystem* cheatSystem = TS::CheatSystem();
+        if (cheatSystem != nullptr)
+        {
+            cheatSystem->RegisterCheat(&gTestCheat);
+        }
+        //TS::cTSGlobals* pGlobals = TS::Globals();
+        //TS::cEdithObjectModule* pObjectManager = pGlobals->ObjectManager();
+        //pObjectManager->DeleteAllObjects();
+    }
     if (KeyPressed(VK_NUMPAD1))
     {
         nTSSG::cTSSGSystem* sgSystem = TS::SGSystem();
@@ -52,7 +67,7 @@ void TestScript::Update()
         TS::cTSGlobals* pGlobals = TS::Globals();
         TS::cEdithObjectModule* pObjectManager = pGlobals->ObjectManager();
         TS::cTSPerson* pSelectedPerson = pObjectManager->GetSelectedPerson();
-        TS::cEdithObject* pSelectedPersonAsObject = pSelectedPerson->AsObject();
+        TS::cEdithObject* pSelectedPersonAsObject = pSelectedPerson->AsEdithObject();
         int selectedPersonID = pSelectedPersonAsObject->GetID();
         // Behavior basically defines the scope of where the game will look for the BHAV. So in its private, semiglobal or global.
         TS::cTSBehavior* pBehavior = pSelectedPersonAsObject->GetBehavior();
@@ -77,16 +92,6 @@ void TestScript::Update()
     }
 }
 
-// Convert an UTF8 string to a wide Unicode String
-std::wstring utf8_decode(const std::string& str)
-{
-    if (str.empty()) return std::wstring();
-    int size_needed = MultiByteToWideChar(CP_UTF8, 0, &str[0], (int)str.size(), NULL, 0);
-    std::wstring wstrTo(size_needed, 0);
-    MultiByteToWideChar(CP_UTF8, 0, &str[0], (int)str.size(), &wstrTo[0], size_needed);
-    return wstrTo;
-}
-
 void TestScript::Draw()
 {
     TS::cTSGameStateController* pGameStateController = TS::GameStateController();
@@ -104,10 +109,8 @@ void TestScript::Draw()
         {
             int lotID = lotInfo->LotID();
             cTSString* lotName = lotInfo->LotName();
-            std::wstring wcs = utf8_decode(std::string(lotName->str));
-            //std::wstring ws(lotName->str, lotName->str + strlen(lotName->str));
             infoString.append(L"Lot Name: ");
-            infoString.append(wcs);
+            infoString.append(lotName->GetWString());
             infoString.append(L"\n");
             infoString.append(L"Lot ID: ");
             infoString.append(std::to_wstring(lotID));
@@ -133,8 +136,7 @@ void TestScript::Draw()
             {
                 infoString.append(L"Lighting State: ");
                 char* lightState = lightingManager->LightingState();
-                std::wstring ws2(lightState, lightState + strlen(lightState));
-                infoString.append(ws2);
+                infoString.append(Encoding::UTF8ToWString(std::string(lightState)));
                 infoString.append(L"\n");
             }
         }

@@ -1,14 +1,20 @@
 #pragma once
-int SwapLot(int lotID, int neighborhoodID)
-{
-	typedef int t_swaplot(int, int);
-	return ((t_swaplot*)0x0093c710)(lotID, neighborhoodID);
-}
+#include "Types.h"
+#include "Encoding.h"
+
+int DllExport SwapLot(int lotID, int neighborhoodID);
 
 // This is likely NOT it.
 class cTSString {
 public:
 	char* str;
+	std::wstring GetWString() {
+		return Encoding::UTF8ToWString(std::string(str));
+	}
+	std::string GetString() {
+		return std::string(str);
+	}
+private:
 	virtual void Func();
 };
 
@@ -269,7 +275,7 @@ namespace TS {
 		virtual void Function239();
 		virtual void Function240();
 	public:
-		virtual bool RunTree(cTSBehavior* behavior, int objectID, char* behaviorName, int unk, int unk2, int unk3, int unk4);
+		virtual bool RunTree(cTSBehavior* behavior, int objectID, char* behaviorName, int arg1, int arg2, int arg3, int arg4);
 	}; //Size: 0x0004
 
 	class cTSPerson {
@@ -285,7 +291,7 @@ namespace TS {
 		virtual void fn5();
 	public:
 		// I'm not sure...
-		virtual cEdithObject* AsObject();
+		virtual cEdithObject* AsEdithObject();
 	};
 
 	class cEdithObjectModule {
@@ -315,7 +321,9 @@ namespace TS {
 		virtual void FlushKillQueue();
 		virtual void HasObjectWithSelector();
 		virtual void AddObjectsWithSelectorToKillQueue();
+	public:
 		virtual void DeleteAllObjects();
+	private:
 		virtual void PostSim();
 		virtual void MinuteChanged();
 		virtual void HourChanged();
@@ -338,11 +346,7 @@ namespace TS {
 
 	};
 
-	cTSSimSystem* SimSystem()
-	{
-		typedef cTSSimSystem* func(void);
-		return ((func*)0x00799a63)();
-	}
+	DllExport cTSSimSystem* SimSystem();
 
 	// Temporary.
 	class cTSCheatParser {
@@ -353,6 +357,47 @@ namespace TS {
 		};
 	};
 
+	class cCheatCommand {
+	private:
+		int unk1 = 0;
+		int unk2 = 0;
+		virtual void* QueryInterface(int unk, void** unk2) {
+			typedef void* __stdcall func(int, void**);
+			return ((func*)0x0043731f)(unk, unk2);
+		}
+		virtual void AddRef() {
+			typedef void __stdcall func();
+			return ((func*)0x00437348)();
+		}
+		virtual int Release() {
+			typedef int __stdcall func();
+			return ((func*)0x0043734f)();
+		}
+	public:
+		virtual void OnRegister(void* parser, void* state) {
+			typedef void __stdcall func(void*, void*);
+			return ((func*)0x00437361)(parser, state);
+		}
+		virtual void Execute(void* arguments) {
+
+		}
+		virtual char* Name() {
+			return '\0';
+		}
+		virtual char* Description(void* commandHelpType) {
+			return '\0';
+		}
+		virtual int HandlesAllArguments() {
+			return 0;
+		}
+		virtual int GetConditionalLevelAdjustment() {
+			return 0;
+		}
+		virtual ~cCheatCommand() {
+
+		}
+	};
+
 	class cTSCheatSystem {
 	private:
 		virtual void Queryinterface();
@@ -360,13 +405,10 @@ namespace TS {
 		virtual void Release();
 	public:
 		virtual cTSCheatParser* AsParser();
+		virtual void RegisterCheat(cCheatCommand* command);
 	};
 
-	cTSCheatSystem* CheatSystem()
-	{
-		typedef cTSCheatSystem* func(void);
-		return ((func*)0x00cd4260)();
-	}
+	DllExport cTSCheatSystem* CheatSystem();
 
 	class cTSNeighborhood {
 	private:
@@ -443,10 +485,7 @@ namespace TS {
 		virtual cEdithObjectModule* ObjectManager();
 	};
 
-	cTSGlobals* Globals() {
-		typedef cTSGlobals* func(void);
-		return ((func*)0x00799a0d)();
-	}
+	DllExport cTSGlobals* Globals();
 
 	class cTSLotInfo {
 	private:
@@ -525,8 +564,5 @@ namespace TS {
 		virtual bool SaveLotEnabled();
 	};
 
-	cTSGameStateController* GameStateController() {
-		typedef cTSGameStateController* func(void);
-		return ((func*)0x00799b65)();
-	}
+	DllExport cTSGameStateController* GameStateController();
 }
