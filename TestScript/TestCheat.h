@@ -3,7 +3,7 @@
 
 class TestCheat : public TS::cCheatCommand {
 public:
-	char* Name();
-	char* Description(void* commandHelpType);
+	const char* Name();
+	const char* Description(void* commandHelpType);
 	void Execute(void* arguments);
 };

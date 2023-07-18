@@ -22,6 +22,31 @@ bool KeyDown(int vKey)
 void TestScript::Update()
 {
     TS::cTSGameStateController* pGameStateController = TS::GameStateController();
+    if (pGameStateController != nullptr)
+    {
+        TS::cTSNeighborhoodInfo* pCurrentNeighborhood = pGameStateController->CurrentNeighborhoodInfo();
+        if (pCurrentNeighborhood != nullptr)
+        {
+            TS::NeighborhoodType currentNeighborhoodType = pCurrentNeighborhood->NeighborhoodType();
+            if (currentNeighborhoodType == TS::NeighborhoodType::Downtown)
+                SetCASLotName("NLS!");
+            else
+                SetCASLotName("CAS!");
+        }
+    }
+    if (KeyPressed(VK_NUMPAD2))
+    {
+        TS::cTSCheatSystem* cheatSystem = TS::CheatSystem();
+        if (cheatSystem != nullptr)
+        {
+            cheatSystem->RegisterCheat(&gTestCheat);
+        }
+        //TS::cTSGlobals* pGlobals = TS::Globals();
+        //TS::cEdithObjectModule* pObjectManager = pGlobals->ObjectManager();
+        //pObjectManager->DeleteAllObjects();
+    }
+    /*
+    TS::cTSGameStateController* pGameStateController = TS::GameStateController();
     if (KeyPressed(VK_ADD))
     {
         if (pGameStateController != nullptr)
@@ -37,17 +62,6 @@ void TestScript::Update()
     {
         // Go to pleasantview
         SwapLot(0, 1);
-    }
-    if (KeyPressed(VK_NUMPAD2))
-    {
-        TS::cTSCheatSystem* cheatSystem = TS::CheatSystem();
-        if (cheatSystem != nullptr)
-        {
-            cheatSystem->RegisterCheat(&gTestCheat);
-        }
-        //TS::cTSGlobals* pGlobals = TS::Globals();
-        //TS::cEdithObjectModule* pObjectManager = pGlobals->ObjectManager();
-        //pObjectManager->DeleteAllObjects();
     }
     if (KeyPressed(VK_NUMPAD1))
     {
@@ -83,13 +97,8 @@ void TestScript::Update()
             TS::cTSCheatParser* cheatParser = cheatSystem->AsParser();
             cheatParser->ExecuteCommand(cheat);
         }
-        /*
-        TS::cTSLotInfo* lotInfo = pGameStateController->CurrentLotInfo();
-        if (lotInfo != nullptr)
-        {
-            lotInfo->SetLocation(20, 20);
-        }*/
-    }
+    }*/
+
 }
 
 void TestScript::Draw()
@@ -99,6 +108,16 @@ void TestScript::Draw()
     infoString.append(L"\n");
     if (pGameStateController != nullptr)
     {
+        TS::cTSNeighborhoodInfo* nhoodInfo = pGameStateController->CurrentNeighborhoodInfo();
+        if (nhoodInfo != nullptr)
+        {
+            infoString.append(L"Hood Addr: ");
+            infoString.append(std::to_wstring((DWORD)nhoodInfo));
+            infoString.append(L"\n");
+            //infoString.append(L"Hood Type: ");
+            //infoString.append(std::to_wstring(nhoodInfo->NeighborhoodType()));
+            //infoString.append(L"\n");
+        }
         if (pGameStateController->InCASLot())
             infoString.append(L"In CAS");
         else

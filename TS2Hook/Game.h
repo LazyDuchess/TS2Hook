@@ -4,6 +4,12 @@
 
 int DllExport SwapLot(int lotID, int neighborhoodID);
 
+DllExport char* GetCASLotName();
+DllExport char* GetYACASLotName();
+
+void DllExport SetCASLotName(const char* lotName);
+void DllExport SetYACASLotName(const char* lotName);
+
 // This is likely NOT it.
 class cTSString {
 public:
@@ -21,6 +27,18 @@ private:
 
 
 namespace TS {
+
+	enum NeighborhoodType {
+		Invalid,
+		Main,
+		Campus,
+		Downtown,
+		Suburb,
+		Village,
+		Lakes,
+		Island
+	};
+
 	class cTSBehavior {
 
 	};
@@ -348,7 +366,7 @@ namespace TS {
 
 	DllExport cTSSimSystem* SimSystem();
 
-	// Temporary.
+	// Not finished
 	class cTSCheatParser {
 	public:
 		void ExecuteCommand(char* command) {
@@ -381,11 +399,11 @@ namespace TS {
 		virtual void Execute(void* arguments) {
 
 		}
-		virtual char* Name() {
-			return '\0';
+		virtual const char* Name() {
+			return "\0";
 		}
-		virtual char* Description(void* commandHelpType) {
-			return '\0';
+		virtual const char* Description(void* commandHelpType) {
+			return "\0";
 		}
 		virtual int HandlesAllArguments() {
 			return 0;
@@ -393,8 +411,8 @@ namespace TS {
 		virtual int GetConditionalLevelAdjustment() {
 			return 0;
 		}
-		virtual ~cCheatCommand() {
-
+		virtual void Free(char unknown) {
+			delete this;
 		}
 	};
 
@@ -409,6 +427,34 @@ namespace TS {
 	};
 
 	DllExport cTSCheatSystem* CheatSystem();
+
+	class cTSNeighborhoodInfo {
+		//TODO
+	private:
+		virtual void QueryInterface();
+		virtual void AddRef();
+		virtual void Release();
+		virtual void SetName();
+		virtual void Name();
+		virtual void SetDescription();
+		virtual void Description();
+		virtual void SetGroupPrefix();
+		virtual void GroupPrefix();
+		virtual void SetOriginalGroupPrefix();
+		virtual void OriginalGroupPrefix();
+		virtual void SetID();
+		virtual void ID();
+		virtual void SetFlag();
+		virtual void Flag();
+		virtual void IsEqual();
+		virtual void IsEqual2();
+	public:
+		virtual void SetNeighborhoodType(NeighborhoodType type);
+		virtual NeighborhoodType NeighborhoodType();
+	private:
+		virtual void SetTime();
+		virtual void NeighborhoodTime();
+	};
 
 	class cTSNeighborhood {
 	private:
@@ -432,7 +478,7 @@ namespace TS {
 	private:
 		virtual void GetNeighborhoodGroupData();
 		virtual void SetNeighborhoodGroupData();
-		virtual void GetNeighborhoodInfo();
+		virtual cTSNeighborhoodInfo* GetNeighborhoodInfo();
 		virtual void AsIGZPersistResource();
 		virtual void SetupFamilyFirstDay();
 		virtual void LoadLotInfos();
@@ -536,7 +582,9 @@ namespace TS {
 		virtual void Init();
 		virtual void Shutdown();
 		virtual void CurrentState();
-		virtual void CurrentNeighborhoodInfo();
+	public:
+		virtual cTSNeighborhoodInfo* CurrentNeighborhoodInfo();
+	private:
 		virtual void CurrentNeighborhoodInfoNonConst();
 		virtual void NextNeighborhoodInfo();
 	public:
