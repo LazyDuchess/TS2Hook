@@ -83,5 +83,8 @@
     <ClCompile Include="Hooking.cpp">
       <Filter>Source Files\Internal</Filter>
     </ClCompile>
+    <ClCompile Include="Scenegraph.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

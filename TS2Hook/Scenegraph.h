@@ -1,5 +1,6 @@
 #pragma once
 #include "Core.h"
+#include "Types.h"
 
 namespace nTSSG {
 	class cLightingManager : public cIGZUnknown {
@@ -138,10 +139,5 @@ namespace nTSSG {
 }
 
 namespace TS {
-	nTSSG::cTSSGSystem* SGSystem()
-	{
-		typedef nTSSG::cTSSGSystem* func(void);
-		return ((func*)0x00799ae4)();
-	}
-	
+	DllExport nTSSG::cTSSGSystem* SGSystem();
 }
