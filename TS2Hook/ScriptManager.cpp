@@ -6,6 +6,7 @@
 #include <d3dx9.h>
 #include <string>
 #include "Drawing.h"
+#include "Hooking.h"
 #pragma comment(lib, "D3D Hook x86.lib")
 #pragma comment(lib, "d3dx9.lib")
 
@@ -71,8 +72,43 @@ long __stdcall hkD3D9EndScene(LPDIRECT3DDEVICE9 pDevice)
     return oD3D9EndScene(pDevice);
 }
 
+// Hooking cTSSimSystem::Init function start
+constexpr auto INIT_HOOK_ADDR = 0x007dd1c0;
+constexpr auto INIT_HOOK_EXIT_ADDR = INIT_HOOK_ADDR + 6;
+
+void __stdcall On_cTSSimSystem_Init()
+{
+    for (Script* script : scripts)
+    {
+        script->OnInit();
+    }
+}
+
+void __declspec(naked) cTSSimSystem_Init_Hook()
+{
+    __asm {
+        push eax
+        push edx
+        push ecx
+        push ebp
+        push ebx
+        push esi
+        call On_cTSSimSystem_Init
+        pop esi
+        pop ebx
+        pop ebp
+        pop ecx
+        pop edx
+        pop eax
+
+        mov eax, fs:[00000000]
+        jmp INIT_HOOK_EXIT_ADDR
+    }
+}
+
 void ScriptManager::Initialize(HMODULE hModule)
 {
+    Hooking::MakeJMP((BYTE*)INIT_HOOK_ADDR, (DWORD)cTSSimSystem_Init_Hook, 6);
 	gModule = hModule;
     CreateThread(nullptr, 0, [](LPVOID) -> DWORD
     {

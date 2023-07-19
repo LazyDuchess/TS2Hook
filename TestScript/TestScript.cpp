@@ -19,6 +19,14 @@ bool KeyDown(int vKey)
     return GetAsyncKeyState(vKey) & 0x8000;
 }
 
+void TestScript::OnInit() {
+    TS::cTSCheatSystem* cheatSystem = TS::CheatSystem();
+    if (cheatSystem != nullptr)
+    {
+        cheatSystem->RegisterCheat(&gTestCheat);
+    }
+}
+
 void TestScript::Update()
 {
     TS::cTSGameStateController* pGameStateController = TS::GameStateController();
@@ -34,6 +42,7 @@ void TestScript::Update()
                 SetCASLotName("CAS!");
         }
     }
+    /*
     if (KeyPressed(VK_NUMPAD2))
     {
         TS::cTSCheatSystem* cheatSystem = TS::CheatSystem();
@@ -44,7 +53,7 @@ void TestScript::Update()
         //TS::cTSGlobals* pGlobals = TS::Globals();
         //TS::cEdithObjectModule* pObjectManager = pGlobals->ObjectManager();
         //pObjectManager->DeleteAllObjects();
-    }
+    }*/
     /*
     TS::cTSGameStateController* pGameStateController = TS::GameStateController();
     if (KeyPressed(VK_ADD))

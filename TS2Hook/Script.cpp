@@ -3,3 +3,4 @@
 
 void Script::Update() {}
 void Script::Draw() {}
+void Script::OnInit() {}

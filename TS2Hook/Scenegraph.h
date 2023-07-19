@@ -1,7 +1,8 @@
 #pragma once
+#include "Core.h"
 
 namespace nTSSG {
-	class cLightingManager {
+	class cLightingManager : public cIGZUnknown {
 	public:
 		void UpdateLightingState() {
 			typedef void func(cLightingManager*);
@@ -9,9 +10,6 @@ namespace nTSSG {
 		}
 		// TODO
 	private:
-		virtual void QueryInterface();
-		virtual void AddRef();
-		virtual void Release();
 		virtual void Init();
 		virtual void Shutdown();
 		virtual void ParseConfigFilesAndLightOverrides();

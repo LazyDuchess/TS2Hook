@@ -5,4 +5,5 @@ class TestScript : public Script {
 public:
 	void Update();
 	void Draw();
+	void OnInit();
 };

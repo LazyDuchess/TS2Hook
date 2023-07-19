@@ -1,6 +1,8 @@
 #pragma once
 #include "Types.h"
 #include "Encoding.h"
+#include "Core.h"
+#include <vector>
 
 int DllExport SwapLot(int lotID, int neighborhoodID);
 
@@ -24,8 +26,6 @@ private:
 	virtual void Func();
 };
 
-
-
 namespace TS {
 
 	enum NeighborhoodType {
@@ -44,12 +44,12 @@ namespace TS {
 	};
 
 	// HUGE Todo
-	class cEdithObject
+	class cTSObject : public cIGZUnknown
 	{
 	private:
-		virtual void Function0();
-		virtual void Function1();
-		virtual void Function2();
+		//virtual void Function0();
+		//virtual void Function1();
+		//virtual void Function2();
 		virtual void Function3();
 		virtual void Function4();
 		virtual void Function5();
@@ -95,7 +95,7 @@ namespace TS {
 		virtual void Function45();
 		virtual void Function46();
 	public:
-		virtual int GetID();
+		virtual short GetID();
 	private:
 		virtual void Function48();
 		virtual void Function49();
@@ -143,7 +143,9 @@ namespace TS {
 	private:
 		virtual void Function90();
 		virtual void Function91();
-		virtual void Function92();
+	public:
+		virtual char* GetName();
+	private:
 		virtual void Function93();
 		virtual void Function94();
 		virtual void Function95();
@@ -296,12 +298,9 @@ namespace TS {
 		virtual bool RunTree(cTSBehavior* behavior, int objectID, char* behaviorName, int arg1, int arg2, int arg3, int arg4);
 	}; //Size: 0x0004
 
-	class cTSPerson {
+	class cTSPerson : public cIGZUnknown {
 	private:
 		// TODO
-		virtual void QueryInterface();
-		virtual void AddRef();
-		virtual void Release();
 		virtual void fn1();
 		virtual void fn2();
 		virtual void fn3();
@@ -309,15 +308,12 @@ namespace TS {
 		virtual void fn5();
 	public:
 		// I'm not sure...
-		virtual cEdithObject* AsEdithObject();
+		virtual cTSObject* AsTSObject();
 	};
 
-	class cEdithObjectModule {
+	class cEdithObjectModule : public cIGZUnknown {
 	private:
 		// TODO
-		virtual void QueryInterface();
-		virtual void AddRef();
-		virtual void Release();
 		virtual void Init();
 		virtual void Shutdown();
 		virtual void Save();
@@ -332,7 +328,9 @@ namespace TS {
 		virtual void AddObject();
 		virtual void ConstructObject();
 		virtual void MakeNewOutOfWorldObject();
-		virtual void KillObject();
+	public:
+		virtual void KillObject(short objectID);
+	private:
 		virtual void AddToKillQueue();
 		virtual void AddToKillQueueWhenNoLongerInUseQueue();
 		virtual void KillObjectsInvalidatedByResize();
@@ -348,16 +346,32 @@ namespace TS {
 		virtual void DayChanged();
 		virtual void GetObjectFromID();
 		virtual void GetValidatedObjectFromID();
-		virtual void GetObjectList();
-		virtual void GetFunctionalObjects();
-		virtual void GetObjects();
+	public:
+		// I wonder why they're using a linked list for this.
+		virtual LinkedList<cTSObject>* GetObjectList();
+	private:
+		virtual std::vector<cTSObject*>* GetFunctionalObjects();
+	public:
+		virtual std::vector<cTSObject*>* GetObjects();
+	private:
 		virtual void GetInstances();
 		virtual void UpdateSelectablePeople();
 		virtual void IsSelectableSimAwakeVisibleAndInWorld();
 		virtual void ShouldLiveModeStop();
-		virtual void InCASLot();
 	public:
+		virtual bool InCASLot();
 		virtual cTSPerson* GetSelectedPerson();
+		virtual void SetSelectedPerson(cTSPerson* person);
+		virtual void AdvanceSelectedPerson();
+	private:
+		// TODO
+		virtual cTSObject* GetObjectByGUID(int guid);
+	public:
+		virtual cTSPerson* GetPersonByGUID(int guid);
+		// I believe this is inaccurate, it returns the current capacity of the object list, not the amount, which is usually higher and grows to avoid heap allocs.
+		virtual int GetObjectCount();
+		virtual std::vector<cTSPerson*>* GetSims();
+		virtual std::vector<cTSPerson*>* GetSelectableSims();
 	};
 
 	class cTSSimSystem {
@@ -375,10 +389,8 @@ namespace TS {
 		};
 	};
 
-	class cCheatCommand {
+	class cCheatCommand : public cIGZUnknown {
 	private:
-		int unk1 = 0;
-		int unk2 = 0;
 		virtual void* QueryInterface(int unk, void** unk2) {
 			typedef void* __stdcall func(int, void**);
 			return ((func*)0x0043731f)(unk, unk2);
@@ -416,11 +428,7 @@ namespace TS {
 		}
 	};
 
-	class cTSCheatSystem {
-	private:
-		virtual void Queryinterface();
-		virtual void AddRef();
-		virtual void Release();
+	class cTSCheatSystem : public cIGZUnknown {
 	public:
 		virtual cTSCheatParser* AsParser();
 		virtual void RegisterCheat(cCheatCommand* command);
@@ -428,12 +436,9 @@ namespace TS {
 
 	DllExport cTSCheatSystem* CheatSystem();
 
-	class cTSNeighborhoodInfo {
+	class cTSNeighborhoodInfo : public cIGZUnknown {
 		//TODO
 	private:
-		virtual void QueryInterface();
-		virtual void AddRef();
-		virtual void Release();
 		virtual void SetName();
 		virtual void Name();
 		virtual void SetDescription();
@@ -456,12 +461,9 @@ namespace TS {
 		virtual void NeighborhoodTime();
 	};
 
-	class cTSNeighborhood {
+	class cTSNeighborhood : public cIGZUnknown {
 	private:
 		// TODO
-		virtual void Queryinterface();
-		virtual void AddRef();
-		virtual void Release();
 		virtual void Write();
 		virtual void Read();
 		virtual void GetGZCLSID();
@@ -493,7 +495,7 @@ namespace TS {
 		virtual void PrepareAndTestLot();
 	};
 
-	class cTSGlobals {
+	class cTSGlobals : public cIGZUnknown {
 	private:
 		char pad[28];
 		void* Simulator;
@@ -501,9 +503,6 @@ namespace TS {
 		cTSNeighborhood* Neighborhood;
 
 		// TODO
-		virtual void QueryInterface();
-		virtual void AddRef();
-		virtual void Release();
 		virtual void* GetSimulator();
 		virtual void GetWantSimulator();
 		virtual void GetMemorySimulator();
@@ -533,12 +532,9 @@ namespace TS {
 
 	DllExport cTSGlobals* Globals();
 
-	class cTSLotInfo {
+	class cTSLotInfo : public cIGZUnknown {
 	private:
 		// TODO - very different from MAC, likely very inaccurate.
-		virtual void QueryInterface();
-		virtual void AddRef();
-		virtual void Release();
 		//virtual void Destructor1();
 		virtual void Destructor2();
 		virtual void RemoveRef();
@@ -573,12 +569,9 @@ namespace TS {
 		virtual void SetLotID(int lotId);
 	};
 
-	class cTSGameStateController {
+	class cTSGameStateController : public cIGZUnknown {
 	private:
 		// TODO - Also check the NonConst stuff.
-		virtual void QueryInterface();
-		virtual void AddRef();
-		virtual void Release();
 		virtual void Init();
 		virtual void Shutdown();
 		virtual void CurrentState();
