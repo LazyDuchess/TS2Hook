@@ -43,6 +43,20 @@ void TestScript::Update()
         }
     }
     /*
+    if (KeyPressed(VK_NUMPAD0))
+    {
+        TS::cTSGlobals* pGlobals = TS::Globals();
+        TS::cEdithObjectModule* pObjectManager = pGlobals->ObjectManager();
+        TS::cTSPerson* pSelectedPerson = pObjectManager->GetSelectedPerson();
+        TS::cTSTreeSim* pSelectedPersonAsObject = pSelectedPerson->AscTSTreeSim();
+        int selectedPersonID = pSelectedPersonAsObject->GetID();
+        // Behavior basically defines the scope of where the game will look for the BHAV. So in its private, semiglobal or global.
+        TS::cTSBehavior* pBehavior = pSelectedPersonAsObject->GetBehavior();
+        char bhavName[] = "DEBUG - Force Twins";
+        pSelectedPersonAsObject->RunTree(pBehavior, selectedPersonID, bhavName, 0, 0, 0, 0);
+    }*/
+
+    /*
     if (KeyPressed(VK_NUMPAD2))
     {
         TS::cTSCheatSystem* cheatSystem = TS::CheatSystem();

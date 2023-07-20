@@ -1,4 +1,7 @@
 #pragma once
+#include "Types.h"
+#include <windef.h>
+
 template <typename T>
 struct LinkedList {
 	struct Node {
@@ -93,3 +96,5 @@ public:
 	virtual Language GetCurrentLanguage();
 	virtual void SetCurrentLanguage(Language language);
 };
+
+DllExport HWND GetGameWindow();

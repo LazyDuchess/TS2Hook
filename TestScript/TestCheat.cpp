@@ -23,7 +23,7 @@ void TestCheat::Execute(void* arguments) {
 		}
 	}
 }
-
+/*
 void SExecute(void* arguments) {
 	TS::cTSGlobals* globals = TS::Globals();
 	if (globals != nullptr)
@@ -40,29 +40,29 @@ void SExecute(void* arguments) {
 				node = node->Next;
 			}
 			//objectMgr->KillObject(434);
-			/*
+			
 			int objectCount = objectMgr->GetObjectCount();
 			std::wstring objMessage = L"LinkedList Object Count: ";
 			objMessage.append(std::to_wstring(objects->Count()));
 			objMessage.append(L"\n");
 			objMessage.append(L"Actual Object Count: ");
 			objMessage.append(std::to_wstring(objectCount));
-			MessageBox(NULL, objMessage.c_str(), L"Info!", MB_OK);*/
+			MessageBox(NULL, objMessage.c_str(), L"Info!", MB_OK);
 			// around 641 in don's house?
-			/*
+			
 			int objects = objectMgr->GetObjectCount();
 			std::wstring objMessage = L"Object Amount: ";
 			objMessage.append(std::to_wstring(objects));
-			MessageBox(NULL, objMessage.c_str(), L"Info!", MB_OK);*/
-			/*
+			MessageBox(NULL, objMessage.c_str(), L"Info!", MB_OK);
+	
 			TS::cTSObject*** objects = objectMgr->GetObjects();
 			std::wstring objMessage = L"First Object ID: ";
 			objMessage.append(std::to_wstring(objects[0][0]->GetID()));
-			MessageBox(NULL, objMessage.c_str(), L"Info!", MB_OK);*/
+			MessageBox(NULL, objMessage.c_str(), L"Info!", MB_OK);
 		}
 	}
 }
-
+*/
 /*
 * TS::cTSGlobals* globals = TS::Globals();
 	if (globals != nullptr)

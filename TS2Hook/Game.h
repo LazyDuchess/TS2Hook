@@ -63,7 +63,9 @@ namespace TS {
 		virtual void Function5();
 		virtual void Function6();
 		virtual void Function7();
-		virtual void Function8();
+	public:
+		virtual cTSObject* AscTSTreeSim();
+	private:
 		virtual void Function9();
 		virtual void Function10();
 		virtual void Function11();
@@ -262,10 +264,14 @@ namespace TS {
 		virtual void Function198();
 		virtual void Function199();
 		virtual void Function200();
-		virtual void Function201();
+	public:
+			virtual void Reset(int unk1 = 0, int unk2 = 0, int unk3 = 0, int unk4 = 0);
+	private:
 		virtual void Function202();
 		virtual void Function203();
-		virtual void Function204();
+	public:
+		virtual void Cleanup(cTSObject* unk1 = 0, int unk2 = 0);
+	private:
 		virtual void Function205();
 		virtual void Function206();
 		virtual void Function207();
@@ -308,6 +314,21 @@ namespace TS {
 
 	class cTSPerson : public cIGZUnknown {
 	private:
+		//virtual void Function0();
+		//virtual void Function1();
+		//virtual void Function2();
+		virtual void Function3();
+		virtual void Function4();
+		virtual void Function5();
+		virtual void Function6();
+		virtual void Function7();
+	public:
+		virtual cTSObject* AscTSTreeSim();
+	};
+
+	/*
+	class cTSPerson : public cIGZUnknown {
+	private:
 		// TODO
 		virtual void fn1();
 		virtual void fn2();
@@ -317,7 +338,8 @@ namespace TS {
 	public:
 		// I'm not sure...
 		virtual cTSObject* AsTSObject();
-	};
+		virtual cTSObject* AsEdithObject();
+	};*/
 
 	class cEdithObjectModule : public cIGZUnknown {
 	private:

@@ -161,6 +161,7 @@
     <ClInclude Include="Encoding.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Hooking.h" />
+    <ClInclude Include="Input.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Scenegraph.h" />
@@ -169,11 +170,13 @@
     <ClInclude Include="Types.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Core.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Drawing.cpp" />
     <ClCompile Include="Encoding.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Hooking.cpp" />
+    <ClCompile Include="Input.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
