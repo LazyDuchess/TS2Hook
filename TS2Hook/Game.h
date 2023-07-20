@@ -128,7 +128,9 @@ namespace TS {
 		virtual void Function22();
 		virtual void Function23();
 		virtual void Function24();
-		virtual void Function25();
+	public:
+		virtual bool GetMiscFlag(int flag);
+	private:
 		virtual void Function26();
 		virtual void Function27();
 		virtual void Function28();
@@ -580,6 +582,9 @@ namespace TS {
 		char pad2[12];
 		cTSNeighborhood* Neighborhood;
 
+		// QueryInterface
+		// AddRef
+		// Release
 		// TODO
 		virtual void* GetSimulator();
 		virtual void GetWantSimulator();
@@ -606,6 +611,14 @@ namespace TS {
 		virtual void TypeAttributes();
 	public:
 		virtual cEdithObjectModule* ObjectManager();
+	private:
+		virtual void fn27();
+		virtual void fn28();
+		virtual void fn29();
+		virtual void fn30();
+	public:
+		virtual bool TestingCheatsEnabled();
+		virtual bool TextDebuggingEnabled();
 	};
 
 	DllExport cTSGlobals* Globals();

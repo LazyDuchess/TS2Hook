@@ -5,8 +5,8 @@
 const char* interactionName = "Reset Object";
 const char* interactionNameSpanish = "Reiniciar Objeto";
 
-void CustomInteractionScript::OnBuildUserDirectedInteractionMenu(std::vector<TS::cTSInteraction*>* interactions, TS::cEdithObjectTestSim* testSim) {
-    if (Input::KeyDown(VK_SHIFT))
+void CustomInteractionScript::OnBuildUserDirectedInteractionMenu(std::vector<TS::cTSInteraction*>* interactions, TS::cEdithObjectTestSim* testSim, bool debug) {
+    if (debug)
         return;
     const char* localizedName = interactionName;
     if (TS::LanguageManager()->GetCurrentLanguage() == Language::Spanish)

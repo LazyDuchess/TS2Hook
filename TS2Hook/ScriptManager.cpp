@@ -81,9 +81,14 @@ constexpr auto APPEND_INTERACTIONS_HOOK_EXIT_ADDR = APPEND_INTERACTIONS_HOOK_ADD
 
 void __stdcall On_cEdithObjectTestSim_AppendInteractionsForMenu(std::vector<TS::cTSInteraction*>* interactions, TS::cEdithObjectTestSim* testSim)
 {
+    bool debug = false;
+    TS::cTSGlobals* pGlobals = TS::Globals();
+    // Flag 0x2000 on an object means we're shift clicking it (debug interactions are shown in testingcheats)
+    if (pGlobals->TestingCheatsEnabled() && testSim->object->GetMiscFlag(0x2000))
+        debug = true;
     for (Script* script : scripts)
     {
-        script->OnBuildUserDirectedInteractionMenu(interactions, testSim);
+        script->OnBuildUserDirectedInteractionMenu(interactions, testSim, debug);
     }
 }
 

@@ -3,5 +3,5 @@
 
 class CustomInteractionScript : public Script {
 public:
-	virtual void OnBuildUserDirectedInteractionMenu(std::vector<TS::cTSInteraction*>* interactions, TS::cEdithObjectTestSim* testSim);
+	virtual void OnBuildUserDirectedInteractionMenu(std::vector<TS::cTSInteraction*>* interactions, TS::cEdithObjectTestSim* testSim, bool debug);
 };
