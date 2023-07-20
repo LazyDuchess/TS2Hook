@@ -86,28 +86,22 @@ void ResetSimMatchingFullname(std::wstring fullName)
 void ResetSimCheat::Execute(nGZCommandParser::cArguments* arguments) {
 	if (arguments->count == 0)
 		return;
-	std::wstring firstName = Encoding::UTF8ToWString((*arguments)[1]);
-
-	if (arguments->count == 1)
-	{
-		if (firstName.length() == 1)
-		{
-			if (_wcsnicmp(L"*", firstName.c_str(), 1) == 0)
-			{
-				ResetAllSims();
-				return;
-			}
-		}
-
-		ResetSimMatchingFullname(firstName);
-		return;
-	}
-	std::wstring lastName = Encoding::UTF8ToWString((*arguments)[2]);
 
 	std::wstringstream stream;
-	stream << firstName << " " << lastName;
+	for (int i = 0; i < arguments->count; i++)
+	{
+		std::wstring currentArgument = Encoding::UTF8ToWString((*arguments)[i + 1]);
+		stream << currentArgument;
+		if (i != arguments->count - 1)
+			stream << " ";
+	}
 	std::wstring result(stream.str());
 
+	if (result.length() == 1 && _wcsnicmp(L"*", result.c_str(), 1) == 0)
+	{
+		ResetAllSims();
+		return;
+	}
+
 	ResetSimMatchingFullname(result);
-	return;
 }
