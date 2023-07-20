@@ -42,24 +42,37 @@ void SetYACASLotName(const char* lotName)
 	strcpy_s((char*)YACAS_LOTNAME_ADDR, YACAS_LOTNAME_SIZE, lotName);
 	VirtualProtect((LPVOID)(YACAS_LOTNAME_ADDR), YACAS_LOTNAME_SIZE, oldProtect, &oldProtect);
 }
-
-TS::cTSSimSystem* TS::SimSystem()
+namespace TS
 {
-	typedef cTSSimSystem* func(void);
-	return ((func*)0x00799a63)();
-}
 
-TS::cTSGameStateController* TS::GameStateController() {
-	typedef cTSGameStateController* func(void);
-	return ((func*)0x00799b65)();
-}
+	cTSSimSystem* SimSystem()
+	{
+		typedef cTSSimSystem* func(void);
+		return ((func*)0x00799a63)();
+	}
 
-TS::cTSGlobals* TS::Globals() {
-	typedef cTSGlobals* func(void);
-	return ((func*)0x00799a0d)();
-}
+	cTSGameStateController* GameStateController() {
+		typedef cTSGameStateController* func(void);
+		return ((func*)0x00799b65)();
+	}
 
-TS::cTSCheatSystem* TS::CheatSystem() {
-	typedef cTSCheatSystem* func(void);
-	return ((func*)0x00cd4260)();
+	cTSGlobals* Globals() {
+		typedef cTSGlobals* func(void);
+		return ((func*)0x00799a0d)();
+	}
+
+	cTSCheatSystem* CheatSystem() {
+		typedef cTSCheatSystem* func(void);
+		return ((func*)0x00cd4260)();
+	}
+
+	void AddCheatInteraction(std::vector<cTSInteraction*>* interactions, cTSPerson* person, cTSObject* object, InteractionType immediate, int flags, const char* name, int instanceId) {
+		typedef void func(std::vector<cTSInteraction*>* interactions, cTSPerson* person, cTSObject* object, InteractionType immediate, int flags, const char* name, int instanceId);
+		return ((func*)0x008a4fc0)(interactions, person, object, immediate, flags, name, instanceId);
+	}
+
+	cRZLanguageManager* LanguageManager() {
+		typedef cRZLanguageManager* func(void);
+		return ((func*)0x00799cfa)();
+	}
 }

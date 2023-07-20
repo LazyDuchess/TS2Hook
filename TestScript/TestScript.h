@@ -6,4 +6,5 @@ public:
 	void Update();
 	void Draw();
 	void OnInit();
+	void OnBuildUserDirectedInteractionMenu(std::vector<TS::cTSInteraction*>* interactions, TS::cEdithObjectTestSim* testSim);
 };

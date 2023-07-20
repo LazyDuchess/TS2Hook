@@ -110,6 +110,15 @@ void TestScript::Update()
 
 }
 
+void TestScript::OnBuildUserDirectedInteractionMenu(std::vector<TS::cTSInteraction*>* interactions, TS::cEdithObjectTestSim* testSim) {
+    const char* intName = "Test Immediate Interaction";
+    const char* intSpanishName = "Spanish Localization";
+    const char* name = intName;
+    if (TS::LanguageManager()->GetCurrentLanguage() == Language::Spanish)
+        name = intSpanishName;
+    TS::AddCheatInteraction(interactions, testSim->person, testSim->object, TS::InteractionType::Immediate, 0x32, name, 0x2da);
+}
+
 void TestScript::Draw()
 {
     TS::cTSGameStateController* pGameStateController = TS::GameStateController();

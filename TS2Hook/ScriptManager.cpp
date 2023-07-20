@@ -76,6 +76,53 @@ long __stdcall hkD3D9EndScene(LPDIRECT3DDEVICE9 pDevice)
 constexpr auto INIT_HOOK_ADDR = 0x007dd1c0;
 constexpr auto INIT_HOOK_EXIT_ADDR = INIT_HOOK_ADDR + 6;
 
+constexpr auto APPEND_INTERACTIONS_HOOK_ADDR = 0x008A6803;
+constexpr auto APPEND_INTERACTIONS_HOOK_EXIT_ADDR = APPEND_INTERACTIONS_HOOK_ADDR + 8;
+
+void __stdcall On_cEdithObjectTestSim_AppendInteractionsForMenu(std::vector<TS::cTSInteraction*>* interactions, TS::cEdithObjectTestSim* testSim)
+{
+    for (Script* script : scripts)
+    {
+        script->OnBuildUserDirectedInteractionMenu(interactions, testSim);
+    }
+}
+
+void __declspec(naked) cEdithObjectTestSim_AppendInteractionsForMenu_Hook()
+{
+    __asm {
+        push edi
+        push eax
+        push edx
+        push ecx
+        push ebp
+        push ebx
+        push esi
+
+        //args, last pushed first
+        //testSim
+        push esi
+        //interactions vector
+        push ebp
+
+        call On_cEdithObjectTestSim_AppendInteractionsForMenu
+        pop esi
+        pop ebx
+        pop ebp
+        pop ecx
+        pop edx
+        pop eax
+        pop edi
+        // Original
+        pop edi
+        pop esi
+        pop ebp
+        pop ebx
+        mov ecx,[esp+0x24]
+
+        jmp APPEND_INTERACTIONS_HOOK_EXIT_ADDR
+    }
+}
+
 void __stdcall On_cTSSimSystem_Init()
 {
     for (Script* script : scripts)
@@ -100,7 +147,7 @@ void __declspec(naked) cTSSimSystem_Init_Hook()
         pop ecx
         pop edx
         pop eax
-
+        // Original
         mov eax, fs:[00000000]
         jmp INIT_HOOK_EXIT_ADDR
     }
@@ -108,6 +155,7 @@ void __declspec(naked) cTSSimSystem_Init_Hook()
 
 void ScriptManager::Initialize(HMODULE hModule)
 {
+    Hooking::MakeJMP((BYTE*)APPEND_INTERACTIONS_HOOK_ADDR, (DWORD)cEdithObjectTestSim_AppendInteractionsForMenu_Hook, 8);
     Hooking::MakeJMP((BYTE*)INIT_HOOK_ADDR, (DWORD)cTSSimSystem_Init_Hook, 6);
 	gModule = hModule;
     CreateThread(nullptr, 0, [](LPVOID) -> DWORD

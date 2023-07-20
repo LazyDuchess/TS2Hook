@@ -27,8 +27,12 @@ private:
 };
 
 namespace TS {
+	enum class InteractionType {
+		Blocking = -1,
+		Immediate = -2
+	};
 
-	enum NeighborhoodType {
+	enum class NeighborhoodType {
 		Invalid,
 		Main,
 		Campus,
@@ -37,6 +41,10 @@ namespace TS {
 		Village,
 		Lakes,
 		Island
+	};
+
+	class cTSInteraction {
+
 	};
 
 	class cTSBehavior {
@@ -605,5 +613,17 @@ namespace TS {
 		virtual bool SaveLotEnabled();
 	};
 
+	class cEdithObjectTestSim {
+	private:
+		virtual void placeholder(); // to have vtable at 0 addr.
+	public:
+		int unk;
+		cTSPerson* person;
+		cTSObject* object;
+	};
+
 	DllExport cTSGameStateController* GameStateController();
+	void DllExport AddCheatInteraction(std::vector<cTSInteraction*>* interactions, cTSPerson* person, cTSObject* object, InteractionType immediate, int flags, const char* name, int instanceId);
+
+	DllExport cRZLanguageManager* LanguageManager();
 }
