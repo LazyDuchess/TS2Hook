@@ -155,6 +155,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CommandParser.h" />
     <ClInclude Include="Core.h" />
     <ClInclude Include="D3DHook.h" />
     <ClInclude Include="Drawing.h" />

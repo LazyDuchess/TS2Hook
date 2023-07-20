@@ -24,7 +24,10 @@
     <ClInclude Include="CustomCheatScript.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ResetSimsCheat.h">
+    <ClInclude Include="ResetSimCheat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SimNameCheat.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -38,7 +41,10 @@
     <ClCompile Include="CustomCheatScript.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ResetSimsCheat.cpp">
+    <ClCompile Include="ResetSimCheat.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SimNameCheat.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

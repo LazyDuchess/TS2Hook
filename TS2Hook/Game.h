@@ -1,7 +1,7 @@
 #pragma once
 #include "Types.h"
-#include "Encoding.h"
 #include "Core.h"
+#include "CommandParser.h"
 #include <vector>
 
 int DllExport SwapLot(int lotID, int neighborhoodID);
@@ -11,20 +11,6 @@ DllExport char* GetYACASLotName();
 
 void DllExport SetCASLotName(const char* lotName);
 void DllExport SetYACASLotName(const char* lotName);
-
-// This is likely NOT it.
-class cTSString {
-public:
-	char* str;
-	std::wstring GetWString() {
-		return Encoding::UTF8ToWString(std::string(str));
-	}
-	std::string GetString() {
-		return std::string(str);
-	}
-private:
-	virtual void Func();
-};
 
 namespace TS {
 	enum class InteractionType {
@@ -49,6 +35,66 @@ namespace TS {
 
 	class cTSBehavior {
 
+	};
+
+	class cTSObjectSelector : public cIGZUnknown {
+	private:
+		//virtual void fn0();
+		//virtual void fn1();
+		//virtual void fn2();
+		virtual void fn3();
+		virtual void fn4();
+		virtual void fn5();
+		virtual void fn6();
+		virtual void fn7();
+		virtual void fn8();
+		virtual void fn9();
+		virtual void fn10();
+		virtual void fn11();
+		virtual void fn12();
+		virtual void fn13();
+		virtual void fn14();
+		virtual void fn15();
+		virtual void fn16();
+		virtual void fn17();
+		virtual void fn18();
+		virtual void fn19();
+		virtual void fn20();
+		virtual void fn21();
+		virtual void fn22();
+		virtual void fn23();
+		virtual void fn24();
+		virtual void fn25();
+		virtual void fn26();
+		virtual void fn27();
+		virtual void fn28();
+		virtual void fn29();
+		virtual void fn30();
+		virtual void fn31();
+		virtual void fn32();
+		virtual void fn33();
+		virtual void fn34();
+		virtual void fn35();
+		virtual void fn36();
+		virtual void fn37();
+		virtual void fn38();
+		virtual void fn39();
+		virtual void fn40();
+		virtual void fn41();
+		virtual void fn42();
+		virtual void fn43();
+		virtual void fn44();
+		virtual void fn45();
+		virtual void fn46();
+		virtual void fn47();
+		virtual void fn48();
+	public:
+		// First Name
+		virtual void GetCatalogName(cRZString* str);
+		// idk
+		virtual void GetCatalogSecondaryName(cRZString* str);
+		// uuh
+		virtual void GetCatalogDescription(cRZString* str);
 	};
 
 	// HUGE Todo
@@ -120,7 +166,9 @@ namespace TS {
 		virtual void Function58();
 		virtual void Function59();
 		virtual void Function60();
-		virtual void Function61();
+	public:
+		virtual cTSObjectSelector* GetSelector();
+	private:
 		virtual void Function62();
 		virtual void Function63();
 		virtual void Function64();
@@ -323,7 +371,7 @@ namespace TS {
 		virtual void Function6();
 		virtual void Function7();
 	public:
-		virtual cTSObject* AscTSTreeSim();
+		virtual cTSObject* AsEdithObject();
 	};
 
 	/*
@@ -438,7 +486,7 @@ namespace TS {
 			typedef void __stdcall func(void*, void*);
 			return ((func*)0x00437361)(parser, state);
 		}
-		virtual void Execute(void* arguments) {
+		virtual void Execute(nGZCommandParser::cArguments* arguments) {
 
 		}
 		virtual const char* Name() {
@@ -595,7 +643,7 @@ namespace TS {
 		virtual float NhoodToLotHeightOffset();
 		virtual void SetNHoodToLotHeightOffset(float offset);
 		virtual int LotID();
-		virtual cTSString* LotName();
+		virtual cRZString* LotName();
 		virtual void SetLotID(int lotId);
 	};
 

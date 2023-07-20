@@ -156,7 +156,8 @@
     <ClInclude Include="CustomCheatScript.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="ResetSimsCheat.h" />
+    <ClInclude Include="ResetSimCheat.h" />
+    <ClInclude Include="SimNameCheat.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CustomCheatScript.cpp" />
@@ -167,7 +168,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="ResetSimsCheat.cpp" />
+    <ClCompile Include="ResetSimCheat.cpp" />
+    <ClCompile Include="SimNameCheat.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TS2Hook\TS2Hook.vcxproj">

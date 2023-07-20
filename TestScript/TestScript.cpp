@@ -159,7 +159,7 @@ void TestScript::Draw()
         if (lotInfo != nullptr)
         {
             int lotID = lotInfo->LotID();
-            cTSString* lotName = lotInfo->LotName();
+            cRZString* lotName = lotInfo->LotName();
             infoString.append(L"Lot Name: ");
             infoString.append(lotName->GetWString());
             infoString.append(L"\n");

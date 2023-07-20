@@ -1,6 +1,8 @@
 #pragma once
 #include "Types.h"
 #include <windef.h>
+#include <string>
+#include "Encoding.h"
 
 template <typename T>
 struct LinkedList {
@@ -95,6 +97,24 @@ private:
 public:
 	virtual Language GetCurrentLanguage();
 	virtual void SetCurrentLanguage(Language language);
+};
+
+// This is likely NOT it.
+class cRZString {
+public:
+	DllExport cRZString();
+	char* str;
+	std::wstring GetWString() {
+		return Encoding::UTF8ToWString(std::string(str));
+	}
+	std::string GetString() {
+		return std::string(str);
+	}
+private:
+	virtual void placeholder() {};
+	int unk1;
+	int unk2;
+	int unk3;
 };
 
 DllExport HWND GetGameWindow();

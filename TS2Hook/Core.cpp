@@ -22,3 +22,9 @@ HWND GetGameWindow()
     int pid = GetCurrentProcessId();
     EnumWindows(EnumWindowsCallback, pid);
 }
+
+cRZString::cRZString()
+{
+    typedef void func();
+    ((func*)0x00404e47)();
+}

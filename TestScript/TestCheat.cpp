@@ -9,7 +9,7 @@ const char* TestCheat::Description(void* commandHelpType) {
 	return "Does something crazy.";
 }
 
-void TestCheat::Execute(void* arguments) {
+void TestCheat::Execute(nGZCommandParser::cArguments* arguments) {
 	TS::cTSGlobals* globals = TS::Globals();
 	if (globals != nullptr)
 	{
