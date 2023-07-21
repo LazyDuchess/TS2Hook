@@ -12,8 +12,6 @@ const char* SimNameCheat::Description(void* commandHelpType) {
 }
 
 void SimNameCheat::Execute(nGZCommandParser::cArguments* arguments) {
-	char* simFirstName = (*arguments)[1];
-	char* simLastName = (*arguments)[2];
 	TS::cTSGlobals* globals = TS::Globals();
 	if (globals != nullptr)
 	{

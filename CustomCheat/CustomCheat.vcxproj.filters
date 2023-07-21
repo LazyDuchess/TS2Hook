@@ -30,6 +30,12 @@
     <ClInclude Include="SimNameCheat.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GetGlobalCheat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SetGlobalCheat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -45,6 +51,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SimNameCheat.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GetGlobalCheat.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SetGlobalCheat.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

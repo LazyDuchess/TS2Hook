@@ -575,10 +575,47 @@ namespace TS {
 		virtual void PrepareAndTestLot();
 	};
 
+	class cTSSimulator : public cIGZUnknown {
+	private:
+		//virtual void fn0();
+		//virtual void fn1();
+		//virtual void fn2();
+		virtual void fn3();
+		virtual void fn4();
+		virtual void fn5();
+		virtual void fn6();
+		virtual void fn7();
+		virtual void fn8();
+		virtual void fn9();
+		virtual void fn10();
+		virtual void fn11();
+		virtual void fn12();
+		virtual void fn13();
+		virtual void fn14();
+	public:
+		virtual short GetGlobal(short id);
+		virtual void SetGlobal(short id, short value);
+	private:
+		virtual void fn17();
+		virtual void fn18();
+		virtual void fn19();
+		virtual void fn20();
+		virtual void fn21();
+		virtual void fn22();
+		virtual void fn23();
+		virtual void fn24();
+		virtual void fn25();
+		virtual void fn26();
+		virtual void fn27();
+		virtual void fn28();
+		virtual void fn29();
+		virtual void fn30();
+	};
+
 	class cTSGlobals : public cIGZUnknown {
 	private:
 		char pad[28];
-		void* Simulator;
+		cTSSimulator* Simulator;
 		char pad2[12];
 		cTSNeighborhood* Neighborhood;
 
@@ -586,7 +623,9 @@ namespace TS {
 		// AddRef
 		// Release
 		// TODO
-		virtual void* GetSimulator();
+	public:
+		virtual cTSSimulator* GetSimulator();
+	private:
 		virtual void GetWantSimulator();
 		virtual void GetMemorySimulator();
 		virtual cTSNeighborhood* GetNeighborhood();

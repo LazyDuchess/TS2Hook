@@ -76,8 +76,28 @@ long __stdcall hkD3D9EndScene(LPDIRECT3DDEVICE9 pDevice)
 constexpr auto INIT_HOOK_ADDR = 0x007dd1c0;
 constexpr auto INIT_HOOK_EXIT_ADDR = INIT_HOOK_ADDR + 6;
 
+// Hooking AppendInteractionsForMenu
 constexpr auto APPEND_INTERACTIONS_HOOK_ADDR = 0x008A6803;
 constexpr auto APPEND_INTERACTIONS_HOOK_EXIT_ADDR = APPEND_INTERACTIONS_HOOK_ADDR + 8;
+
+// Hooking cTSSimulator::GetGlobal, if the Global ID is 0x3D we always return 1, this way SimAntics can check if TS2Hook is installed (If Global 0x3D returns > 0)
+constexpr auto SIMULATOR_GETGLOBAL_HOOK_ADDR = 0x00871F30;
+constexpr auto SIMULATOR_GETGLOBAL_HOOK_EXIT_ADDR = SIMULATOR_GETGLOBAL_HOOK_ADDR + 5;
+
+// Simple so I'm just writing it in asm.
+void __declspec(naked) cTSSimulator_GetGlobal_Hook()
+{
+    __asm {
+        movsx eax,word ptr [esp+0x04]
+        cmp eax, 0x3D
+        je IfTrue
+        jmp SIMULATOR_GETGLOBAL_HOOK_EXIT_ADDR
+
+        IfTrue:
+            mov eax, 0x1
+            ret 0x4
+    }
+}
 
 void __stdcall On_cEdithObjectTestSim_AppendInteractionsForMenu(std::vector<TS::cTSInteraction*>* interactions, TS::cEdithObjectTestSim* testSim)
 {
@@ -162,6 +182,7 @@ void ScriptManager::Initialize(HMODULE hModule)
 {
     Hooking::MakeJMP((BYTE*)APPEND_INTERACTIONS_HOOK_ADDR, (DWORD)cEdithObjectTestSim_AppendInteractionsForMenu_Hook, 8);
     Hooking::MakeJMP((BYTE*)INIT_HOOK_ADDR, (DWORD)cTSSimSystem_Init_Hook, 6);
+    Hooking::MakeJMP((BYTE*)SIMULATOR_GETGLOBAL_HOOK_ADDR, (DWORD)cTSSimulator_GetGlobal_Hook, 5);
 	gModule = hModule;
     CreateThread(nullptr, 0, [](LPVOID) -> DWORD
     {
