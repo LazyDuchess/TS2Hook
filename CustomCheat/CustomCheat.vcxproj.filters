@@ -36,9 +36,6 @@
     <ClInclude Include="SetGlobalCheat.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="WalkToCheat.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -60,9 +57,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SetGlobalCheat.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="WalkToCheat.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

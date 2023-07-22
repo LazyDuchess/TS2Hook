@@ -160,7 +160,6 @@
     <ClInclude Include="ResetSimCheat.h" />
     <ClInclude Include="SetGlobalCheat.h" />
     <ClInclude Include="SimNameCheat.h" />
-    <ClInclude Include="WalkToCheat.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CustomCheatScript.cpp" />
@@ -175,7 +174,6 @@
     <ClCompile Include="ResetSimCheat.cpp" />
     <ClCompile Include="SetGlobalCheat.cpp" />
     <ClCompile Include="SimNameCheat.cpp" />
-    <ClCompile Include="WalkToCheat.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TS2Hook\TS2Hook.vcxproj">
