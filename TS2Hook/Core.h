@@ -102,8 +102,10 @@ public:
 // This is likely NOT it.
 class cRZString {
 public:
+	// A Rizzo UTF-8 string.
 	DllExport cRZString();
 	char* str;
+	// Converts the UTF-8 string to Unicode.
 	std::wstring GetWString() {
 		return Encoding::UTF8ToWString(std::string(str));
 	}
@@ -117,4 +119,5 @@ private:
 	int unk3;
 };
 
+// Returns the game window.
 DllExport HWND GetGameWindow();

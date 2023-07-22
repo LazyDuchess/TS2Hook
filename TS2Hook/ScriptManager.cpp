@@ -72,30 +72,232 @@ long __stdcall hkD3D9EndScene(LPDIRECT3DDEVICE9 pDevice)
     return oD3D9EndScene(pDevice);
 }
 
-// Hooking cTSSimSystem::Init function start
+// Hooking cTSSimSystem::Init function start (End)
 constexpr auto INIT_HOOK_ADDR = 0x007dd1c0;
 constexpr auto INIT_HOOK_EXIT_ADDR = INIT_HOOK_ADDR + 6;
 
-// Hooking AppendInteractionsForMenu
+// Hooking AppendInteractionsForMenu (End)
 constexpr auto APPEND_INTERACTIONS_HOOK_ADDR = 0x008A6803;
 constexpr auto APPEND_INTERACTIONS_HOOK_EXIT_ADDR = APPEND_INTERACTIONS_HOOK_ADDR + 8;
 
-// Hooking cTSSimulator::GetGlobal, if the Global ID is 0x3D we always return 1, this way SimAntics can check if TS2Hook is installed (If Global 0x3D returns > 0)
-constexpr auto SIMULATOR_GETGLOBAL_HOOK_ADDR = 0x00871F30;
-constexpr auto SIMULATOR_GETGLOBAL_HOOK_EXIT_ADDR = SIMULATOR_GETGLOBAL_HOOK_ADDR + 5;
+// Hooking cTSSimulator::TickAllObjects (Begin)
+constexpr auto SIMULATOR_PRESIMULATE_HOOK_ADDR = 0x008719f0;
+constexpr auto SIMULATOR_PRESIMULATE_HOOK_EXIT_ADDR = SIMULATOR_PRESIMULATE_HOOK_ADDR + 5;
 
-// Simple so I'm just writing it in asm.
-void __declspec(naked) cTSSimulator_GetGlobal_Hook()
+// Hooking cTSSimulator::InitShared (End)
+constexpr auto SIMULATOR_INITSHARED_HOOK_ADDR = 0x008737b4;
+constexpr auto SIMULATOR_INITSHARED_HOOK_EXIT_ADDR = SIMULATOR_INITSHARED_HOOK_ADDR + 5;
+
+// Hooking cTSSimulator::Read (End)
+constexpr auto SIMULATOR_READ_HOOK_ADDR = 0x00872e73;
+constexpr auto SIMULATOR_READ_HOOK_EXIT_ADDR = SIMULATOR_READ_HOOK_ADDR + 5;
+
+// Hooking cTSSimulator::Write (Begin)
+constexpr auto SIMULATOR_WRITE_BEGIN_HOOK_ADDR = 0x00872751;
+constexpr auto SIMULATOR_WRITE_BEGIN_HOOK_EXIT_ADDR = SIMULATOR_WRITE_BEGIN_HOOK_ADDR + 5;
+
+// Hooking cTSSimulator::Write (End)
+constexpr auto SIMULATOR_WRITE_END_HOOK_ADDR = 0x008728da;
+constexpr auto SIMULATOR_WRITE_END_HOOK_EXIT_ADDR = SIMULATOR_WRITE_END_HOOK_ADDR + 5;
+
+void SetTS2HookInstalledGlobal(TS::cTSSimulator* simulator)
+{
+    simulator->SetGlobal(0x2, 1);
+}
+
+void UnsetTS2HookInstalledGlobal(TS::cTSSimulator* simulator)
+{
+    simulator->SetGlobal(0x2, 0);
+}
+
+void __stdcall On_cTSSimulator_InitShared(TS::cTSSimulator* simulator)
+{
+    SetTS2HookInstalledGlobal(simulator);
+    for (Script* script : scripts)
+    {
+        script->OnSimulatorInit(simulator);
+    }
+}
+
+void __declspec(naked) cTSSimulator_InitShared_Hook()
 {
     __asm {
-        movsx eax,word ptr [esp+0x04]
-        cmp eax, 0x3D
-        je IfTrue
-        jmp SIMULATOR_GETGLOBAL_HOOK_EXIT_ADDR
+        push edi
+        push eax
+        push edx
+        push ecx
+        push ebp
+        push ebx
+        push esi
 
-        IfTrue:
-            mov eax, 0x1
-            ret 0x4
+        // cTSSimulator*
+        push esi
+        call On_cTSSimulator_InitShared
+
+        pop esi
+        pop ebx
+        pop ebp
+        pop ecx
+        pop edx
+        pop eax
+        pop edi
+        // Original
+        mov ecx, [esp+0x24]
+        pop edi
+        jmp SIMULATOR_INITSHARED_HOOK_EXIT_ADDR
+    }
+}
+
+void __stdcall On_cTSSimulator_Read(TS::cTSSimulator* simulator)
+{
+    SetTS2HookInstalledGlobal(simulator);
+    for (Script* script : scripts)
+    {
+        script->OnSimulatorFinishLoading(simulator);
+    }
+}
+
+void __declspec(naked) cTSSimulator_Read_Hook()
+{
+    __asm {
+        push edi
+        push eax
+        push edx
+        push ecx
+        push ebp
+        push ebx
+        push esi
+
+        // cTSSimulator*
+        push esi
+        call On_cTSSimulator_Read
+
+        pop esi
+        pop ebx
+        pop ebp
+        pop ecx
+        pop edx
+        pop eax
+        pop edi
+        // Original
+        mov edx, [ebp+0x00]
+        mov ecx, ebp
+        jmp SIMULATOR_READ_HOOK_EXIT_ADDR
+    }
+}
+
+void __stdcall On_cTSSimulator_Write_Begin(TS::cTSSimulator* simulator)
+{
+    UnsetTS2HookInstalledGlobal(simulator);
+    for (Script* script : scripts)
+    {
+        script->OnSimulatorSaveBegin(simulator);
+    }
+}
+
+void __declspec(naked) cTSSimulator_Write_Begin_Hook()
+{
+    __asm {
+        push edi
+        push eax
+        push edx
+        push ecx
+        push ebp
+        push ebx
+        push esi
+
+        // cTSSimulator*
+        push ecx
+        call On_cTSSimulator_Write_Begin
+
+        pop esi
+        pop ebx
+        pop ebp
+        pop ecx
+        pop edx
+        pop eax
+        pop edi
+        // Original
+        push 0x53494D49
+        jmp SIMULATOR_WRITE_BEGIN_HOOK_EXIT_ADDR
+    }
+}
+
+void __stdcall On_cTSSimulator_Write_End(TS::cTSSimulator* simulator)
+{
+    SetTS2HookInstalledGlobal(simulator);
+    for (Script* script : scripts)
+    {
+        script->OnSimulatorSaveEnd(simulator);
+    }
+}
+
+void __declspec(naked) cTSSimulator_Write_End_Hook()
+{
+    __asm {
+        push edi
+        push eax
+        push edx
+        push ecx
+        push ebp
+        push ebx
+        push esi
+
+        // cTSSimulator*
+        push edi
+        call On_cTSSimulator_Write_End
+
+        pop esi
+        pop ebx
+        pop ebp
+        pop ecx
+        pop edx
+        pop eax
+        pop edi
+        // Original
+        neg al
+        pop edi
+        pop esi
+        pop ebp
+        jmp SIMULATOR_WRITE_END_HOOK_EXIT_ADDR
+    }
+}
+
+void __stdcall On_cTSSimulator_PreSimulate(TS::cTSSimulator* simulator)
+{
+    for (Script* script : scripts)
+    {
+        script->OnPreSimulate(simulator);
+    }
+}
+
+void __declspec(naked) cTSSimulator_PreSimulate_Hook()
+{
+    __asm {
+        push edi
+        push eax
+        push edx
+        push ecx
+        push ebp
+        push ebx
+        push esi
+
+        // cTSSimulator*
+        push ecx
+        call On_cTSSimulator_PreSimulate
+
+        pop esi
+        pop ebx
+        pop ebp
+        pop ecx
+        pop edx
+        pop eax
+        pop edi
+        // Original
+        sub esp, 0x08
+        push ebx
+        push ebp
+        jmp SIMULATOR_PRESIMULATE_HOOK_EXIT_ADDR
     }
 }
 
@@ -182,7 +384,12 @@ void ScriptManager::Initialize(HMODULE hModule)
 {
     Hooking::MakeJMP((BYTE*)APPEND_INTERACTIONS_HOOK_ADDR, (DWORD)cEdithObjectTestSim_AppendInteractionsForMenu_Hook, 8);
     Hooking::MakeJMP((BYTE*)INIT_HOOK_ADDR, (DWORD)cTSSimSystem_Init_Hook, 6);
-    Hooking::MakeJMP((BYTE*)SIMULATOR_GETGLOBAL_HOOK_ADDR, (DWORD)cTSSimulator_GetGlobal_Hook, 5);
+    Hooking::MakeJMP((BYTE*)SIMULATOR_PRESIMULATE_HOOK_ADDR, (DWORD)cTSSimulator_PreSimulate_Hook, 5);
+    Hooking::MakeJMP((BYTE*)SIMULATOR_INITSHARED_HOOK_ADDR, (DWORD)cTSSimulator_InitShared_Hook, 5);
+    Hooking::MakeJMP((BYTE*)SIMULATOR_READ_HOOK_ADDR, (DWORD)cTSSimulator_Read_Hook, 5);
+    Hooking::MakeJMP((BYTE*)SIMULATOR_WRITE_BEGIN_HOOK_ADDR, (DWORD)cTSSimulator_Write_Begin_Hook, 5);
+    Hooking::MakeJMP((BYTE*)SIMULATOR_WRITE_END_HOOK_ADDR, (DWORD)cTSSimulator_Write_End_Hook, 5);
+    //Hooking::MakeJMP((BYTE*)SIMULATOR_GETGLOBAL_HOOK_ADDR, (DWORD)cTSSimulator_GetGlobal_Hook, 5);
 	gModule = hModule;
     CreateThread(nullptr, 0, [](LPVOID) -> DWORD
     {

@@ -66,8 +66,18 @@ namespace TS
 		return ((func*)0x00cd4260)();
 	}
 
-	void AddCheatInteraction(std::vector<cTSInteraction*>* interactions, cTSPerson* person, cTSObject* object, InteractionType immediate, int flags, const char* name, int instanceId) {
-		typedef void func(std::vector<cTSInteraction*>* interactions, cTSPerson* person, cTSObject* object, InteractionType immediate, int flags, const char* name, int instanceId);
+	/// <summary>
+	/// Adds an interaction to an interaction vector.
+	/// </summary>
+	/// <param name="interactions">Interaction vector</param>
+	/// <param name="person">Person</param>
+	/// <param name="object">Target object</param>
+	/// <param name="immediate">Whether the interaction should run immediately or blocking</param>
+	/// <param name="flags">Autonomy flags? 0x32 by default</param>
+	/// <param name="name">Name on pie menu</param>
+	/// <param name="instanceId">Instance ID of the interaction. Will search in Private -> Semiglobal -> Global scopes.</param>
+	void AddCheatInteraction(std::vector<cTSInteraction*>* interactions, cTSPerson* person, cTSObject* object, InteractionType immediate, short flags, const char* name, short instanceId) {
+		typedef void func(std::vector<cTSInteraction*>* interactions, cTSPerson* person, cTSObject* object, InteractionType immediate, short flags, const char* name, short instanceId);
 		return ((func*)0x008a4fc0)(interactions, person, object, immediate, flags, name, instanceId);
 	}
 

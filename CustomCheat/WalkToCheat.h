@@ -1,7 +1,7 @@
 #pragma once
 #include "../TS2Hook/Game.h"
 
-class ResetSimCheat : public TS::cCheatCommand {
+class WalkToCheat : public TS::cCheatCommand {
 public:
 	const char* Name();
 	const char* Description(void* commandHelpType);

@@ -18,6 +18,7 @@ namespace Drawing {
 		}
 	};
 
+	// Draws some simple text.
 	void DllExport DrawTxt(LPCWSTR string, Color color, int left, int top);
 	void OnDraw(LPDIRECT3DDEVICE9 pDevice);
 	void OnReset(LPDIRECT3DDEVICE9 pDevice);

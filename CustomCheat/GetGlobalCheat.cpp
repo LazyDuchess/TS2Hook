@@ -7,14 +7,14 @@ const char* GetGlobalCheat::Name() {
 }
 
 const char* GetGlobalCheat::Description(void* commandHelpType) {
-	return "Usage: <id> Returns Simulator Global";
+	return "Usage: <id> Returns Simulator Global. ID can be hex or decimal.";
 }
 
 void GetGlobalCheat::Execute(nGZCommandParser::cArguments* arguments) {
 	if (arguments->count < 1)
 		return;
 	std::wstring arg1 = Encoding::UTF8ToWString((*arguments)[1]);
-	short globalID = std::stoi(arg1,NULL, 16);
+	short globalID = std::stoi(arg1,NULL, 0);
 	TS::cTSGlobals* pGlobals = TS::Globals();
 	if (pGlobals == nullptr)
 		return;

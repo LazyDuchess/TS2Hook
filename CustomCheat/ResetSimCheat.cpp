@@ -12,10 +12,6 @@ const char* ResetSimCheat::Description(void* commandHelpType) {
 	return "Usage: resetSim <First Name> <Last Name> or resetSim * to reset everyone.";
 }
 
-int ResetSimCheat::HandlesAllArguments() {
-	return 1;
-}
-
 void ResetAllSims()
 {
 	TS::cTSGlobals* globals = TS::Globals();

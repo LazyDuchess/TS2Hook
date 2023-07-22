@@ -29,10 +29,6 @@ namespace TS {
 		Island
 	};
 
-	class cTSInteraction {
-
-	};
-
 	class cTSBehavior {
 
 	};
@@ -67,7 +63,9 @@ namespace TS {
 		virtual void fn25();
 		virtual void fn26();
 		virtual void fn27();
-		virtual void fn28();
+	public:
+		virtual int GetGUID();
+	private:
 		virtual void fn29();
 		virtual void fn30();
 		virtual void fn31();
@@ -357,10 +355,97 @@ namespace TS {
 		virtual void Function237();
 		virtual void Function238();
 		virtual void Function239();
-		virtual void Function240();
 	public:
-		virtual bool RunTree(cTSBehavior* behavior, int objectID, char* behaviorName, int arg1, int arg2, int arg3, int arg4);
+		virtual bool RunTree(cTSBehavior* behavior, short objectID, short treeID, short param1, short param2, short param3, short param4);
+		// Runs a tree immediately by its BHAV name, in Private -> Semiglobal -> Global scopes. Not sure about the args.
+		virtual bool RunTreeByName(cTSBehavior* behavior, short objectID, const char* behaviorName, short param1, short param2, short param3, short param4);
 	}; //Size: 0x0004
+
+	class cTSInteraction : public cIGZUnknown {
+	private:
+		int pad0;
+		short pad1;
+		short pad2;
+		short pad3;
+		short StackObjectID;
+		short StackObjectID2; // use settargetobject for this better?
+	private:
+		//virtual void fn0();
+		//virtual void fn1();
+		//virtual void fn2();
+		virtual void fn3();
+		virtual void fn4();
+		virtual void fn5();
+		virtual void fn6();
+		virtual void fn7();
+		virtual void fn8();
+		virtual void fn9();
+		virtual void fn10();
+		virtual void fn11();
+		virtual void fn12();
+		virtual void fn13();
+		virtual void fn14();
+		virtual void fn15();
+		virtual void fn16();
+		virtual void fn17();
+		virtual void fn18();
+		virtual void fn19();
+		virtual void fn20();
+		virtual void fn21();
+		virtual void fn22();
+		virtual void fn23();
+		virtual void fn24();
+		virtual void fn25();
+		virtual void fn26();
+	public:
+		// Provide 4 parameters to pass to the interaction.
+		virtual void SetStackVars(short vars[]);
+	private:
+		virtual void fn28();
+		virtual void fn29();
+		virtual void fn30();
+		virtual void fn31();
+		virtual void fn32();
+		virtual void fn33();
+		virtual void fn34();
+		virtual void fn35();
+		virtual void fn36();
+		virtual void fn37();
+		virtual void fn38();
+		virtual void fn39();
+		virtual void fn40();
+		virtual void fn41();
+		virtual void fn42();
+		virtual void fn43();
+		virtual void fn44();
+		virtual void fn45();
+		virtual void fn46();
+		virtual void fn47();
+		virtual void fn48();
+		virtual void fn49();
+		virtual void fn50();
+		virtual void fn51();
+		virtual void fn52();
+		virtual void fn53();
+		virtual void fn54();
+		virtual void fn55();
+		virtual void fn56();
+		virtual void fn57();
+		virtual void fn58();
+		virtual void fn59();
+		virtual void fn60();
+		virtual void fn61();
+		virtual void fn62();
+		virtual void fn63();
+		virtual void fn64();
+	public:
+		virtual void SetTargetObject(cTSObject* targetObject);
+	private:
+		virtual void fn66();
+		virtual void fn67();
+		virtual void fn68();
+		virtual void fn69();
+	};
 
 	class cTSPerson : public cIGZUnknown {
 	private:
@@ -443,10 +528,9 @@ namespace TS {
 		virtual cTSPerson* GetSelectedPerson();
 		virtual void SetSelectedPerson(cTSPerson* person);
 		virtual void AdvanceSelectedPerson();
-	private:
+	public:
 		// TODO
 		virtual cTSObject* GetObjectByGUID(int guid);
-	public:
 		virtual cTSPerson* GetPersonByGUID(int guid);
 		// I believe this is inaccurate, it returns the current capacity of the object list, not the amount, which is usually higher and grows to avoid heap allocs.
 		virtual int GetObjectCount();
@@ -577,11 +661,15 @@ namespace TS {
 
 	class cTSSimulator : public cIGZUnknown {
 	private:
+		//char pad[20];
+		//short global0;
+		//short global1;
+		//short ZoomLevel;
 		//virtual void fn0();
 		//virtual void fn1();
 		//virtual void fn2();
 		virtual void fn3();
-		virtual void fn4();
+		virtual void Read();
 		virtual void fn5();
 		virtual void fn6();
 		virtual void fn7();
@@ -740,12 +828,14 @@ namespace TS {
 		virtual void placeholder(); // to have vtable at 0 addr.
 	public:
 		int unk;
+		// Sim testing.
 		cTSPerson* person;
+		// Target object.
 		cTSObject* object;
 	};
 
 	DllExport cTSGameStateController* GameStateController();
-	void DllExport AddCheatInteraction(std::vector<cTSInteraction*>* interactions, cTSPerson* person, cTSObject* object, InteractionType immediate, int flags, const char* name, int instanceId);
+	void DllExport AddCheatInteraction(std::vector<cTSInteraction*>* interactions, cTSPerson* person, cTSObject* object, InteractionType immediate, short flags, const char* name, short instanceId);
 
 	DllExport cRZLanguageManager* LanguageManager();
 }
