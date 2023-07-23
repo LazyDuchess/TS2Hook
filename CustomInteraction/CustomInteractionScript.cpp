@@ -21,8 +21,12 @@ void CustomInteractionScript::OnBuildUserDirectedInteractionMenu(std::vector<TS:
 	// Run the Interaction - Steal TEST check tree on the clicked object.
 	if (!pPersonAsObject->RunTree(pBehavior, objectId, 0x1003, 0, 0, 0, 0))
 		return;
+	int stringSetGroupID = pInteractionObject->GetSelector()->GetGroupID();
+	//int stringSetGroupID = 0x7FDC534B;
+	//cTSString* interactionName = new cTSString(0xAF2, 0, stringSetGroupID);
+	cTSString interactionName = cTSString(0xaf2,1,stringSetGroupID,0x2026960b);
 	// Check tree passed, add Interaction - Steal. We have to pass our interaction controller here rather than the object we clicked as the target.
-	TS::AddCheatInteraction(interactions, testSim->person, pInteractionObject, TS::InteractionType::Blocking, 0x32, "Steal", 0x1002);
+	TS::AddCheatInteraction(interactions, testSim->person, pInteractionObject, TS::InteractionType::Blocking, 0x32, interactionName.str, 0x1002);
 	// Get the interaction we just added.
 	TS::cTSInteraction* newInteraction = interactions->back();
 	// Change the target object so that the interaction runs on the object we clicked, rather than the one with the interaction.

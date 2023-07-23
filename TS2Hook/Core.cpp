@@ -25,6 +25,22 @@ HWND GetGameWindow()
 
 cRZString::cRZString()
 {
-    typedef void func();
+    typedef void __stdcall func();
     ((func*)0x00404e47)();
+}
+
+cTSString::cTSString(short instanceID, int stringID, int groupID, int unknown)
+{
+    typedef void __stdcall func(short instanceID, int stringID, int groupID, int unknown);
+    ((func*)0x00cd4070)(instanceID, stringID, groupID, unknown);
+}
+
+cTSString::~cTSString()
+{
+    free(str);
+}
+
+cRZString::~cRZString()
+{
+    free(str);
 }

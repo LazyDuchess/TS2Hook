@@ -93,6 +93,50 @@ namespace TS {
 		virtual void GetCatalogSecondaryName(cRZString* str);
 		// uuh
 		virtual void GetCatalogDescription(cRZString* str);
+	private:
+		virtual void fn52();
+		virtual void fn53();
+		virtual void fn54();
+		virtual void fn55();
+		virtual void fn56();
+		virtual void fn57();
+		virtual void fn58();
+		virtual void fn59();
+		virtual void fn60();
+		virtual void fn61();
+		virtual void fn62();
+		virtual void fn63();
+		virtual void fn64();
+		virtual void fn65();
+	public:
+		virtual int GetGroupID();
+		virtual int GetFile();
+	private:
+		virtual void fn68();
+	public:
+		virtual int GetChildGroupId_SemiGlobal();
+	private:
+		virtual void fn70();
+		virtual void fn71();
+		virtual void fn72();
+		virtual void fn73();
+		virtual void fn74();
+		virtual void fn75();
+		virtual void fn76();
+		virtual void fn77();
+		virtual void fn78();
+		virtual void fn79();
+		virtual void fn80();
+		virtual void fn91();
+		virtual void fn92();
+		virtual void fn93();
+		virtual void fn94();
+		virtual void fn95();
+		virtual void fn96();
+		virtual void fn97();
+		virtual void fn98();
+		virtual void fn99();
+		virtual void fn100();
 	};
 
 	// HUGE Todo

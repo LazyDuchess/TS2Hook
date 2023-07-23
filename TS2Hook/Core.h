@@ -34,10 +34,22 @@ struct LinkedList {
 };
 class cIGZUnknown {
 private:
-	virtual void* QueryInterface(int unk, void** unk2) = 0;
+	virtual void* QueryInterface(int unk, void** unk2) { 
+		typedef void* __stdcall func(int unk, void** unk2);
+		func* fnPtr = (func*)(*(int*)(((int)(*((int*)this))) + 0x0));
+		return fnPtr(unk, unk2);
+	};
 public:
-	virtual void AddRef() = 0;
-	virtual int Release() = 0;
+	virtual void AddRef() {
+		typedef void __stdcall func();
+		func* fnPtr = (func*)(*(int*)(((int)(*((int*)this))) + 0x4));
+		fnPtr();
+	}
+	virtual int Release() {
+		typedef int __stdcall func();
+		func* fnPtr = (func*)(*(int*)(((int)(*((int*)this))) + 0x8));
+		return fnPtr();
+	};
 };
 
 enum class Language {
@@ -99,11 +111,8 @@ public:
 	virtual void SetCurrentLanguage(Language language);
 };
 
-// This is likely NOT it.
-class cRZString {
+class cIGZString : public cIGZUnknown {
 public:
-	// A Rizzo UTF-8 string.
-	DllExport cRZString();
 	char* str;
 	// Converts the UTF-8 string to Unicode.
 	std::wstring GetWString() {
@@ -112,11 +121,23 @@ public:
 	std::string GetString() {
 		return std::string(str);
 	}
+};
+
+// This is likely NOT it.
+class cRZString : public cIGZString {
+public:
+	// A Rizzo UTF-8 string.
+	DllExport cRZString();
+	DllExport ~cRZString();
+	char pad[12];
+};
+
+class cTSString : public cIGZString {
+public:
+	DllExport cTSString(short instanceID, int stringID, int groupID, int unknown = 0x2026960b);
+	DllExport ~cTSString();
 private:
-	virtual void placeholder() {};
-	int unk1;
-	int unk2;
-	int unk3;
+	char pad[30];
 };
 
 // Returns the game window.
