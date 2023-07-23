@@ -1,6 +1,7 @@
 # TS2Hook
 Hooking framework for TS2
 
+Requires a No-CD version of Sims 2 Mansion & Garden to work, or Sims2RPC.
 
 Requires the Direct3D SDK to build
 
