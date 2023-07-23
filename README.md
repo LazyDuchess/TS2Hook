@@ -7,10 +7,16 @@ Requires the Direct3D SDK to build
 ## Structure
 * `CustomCheat` - Contains an .asi plugin that adds custom cheats to the in-game console.
 * `CustomInteraction` - Contains an .asi plugin that adds a custom interaction globally. Requires **"Downloads/ld_TS2Hook_CustomInteraction.package"**
-* `TS2Hook` - Code for the main DLL, all plugins in this project depend on it. Compiled .dll goes into the same place as your Sims2EP9.exe file.
+* `TS2Hook` - Code for the main DLL, all plugins in this project depend on it. Compiled .dll goes into the same place as your **Sims2EP9.exe** file.
 * `Downloads` - Packages with custom objects to test TS2Hook functionality.
 * `TestScript` - Messy script to test TS2Hook functionality, mostly random notes, code snippets and experiments. Not included in the Solution by default.
 * `D3DHook` - [Universal D3D Hooking Library](https://www.unknowncheats.me/forum/direct3d/335041-universal-d3d-hooking-library.html) used to hook into the renderer to display text and run code every frame.
+
+# Installation
+
+**TS2Hook.dll** goes into your Mansion & Garden TSBin folder. If you use Sims2RPC, the .asi files should be put into your **"TSBin/mods"** folder. If you use the [Ultimate ASI Loader](https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases), they should be placed in TSBin alongside **TS2Hook.dll**
+
+The .package files in downloads go in your **"Documents/EA Games/The Sims 2/Downloads"** folder.
 
 # Creating a Script using Visual Studio
 
