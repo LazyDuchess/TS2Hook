@@ -157,8 +157,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CustomCheatScript.h" />
+    <ClInclude Include="FlipUICheat.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GetGlobalCheat.h" />
+    <ClInclude Include="MessageBoxCheat.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="ResetSimCheat.h" />
     <ClInclude Include="SetGlobalCheat.h" />
@@ -167,7 +169,9 @@
   <ItemGroup>
     <ClCompile Include="CustomCheatScript.cpp" />
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="FlipUICheat.cpp" />
     <ClCompile Include="GetGlobalCheat.cpp" />
+    <ClCompile Include="MessageBoxCheat.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

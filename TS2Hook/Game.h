@@ -38,14 +38,18 @@ namespace TS {
 		//virtual void fn0();
 		//virtual void fn1();
 		//virtual void fn2();
-		virtual void fn3();
-		virtual void fn4();
-		virtual void fn5();
-		virtual void fn6();
-		virtual void fn7();
-		virtual void fn8();
-		virtual void fn9();
-		virtual void fn10();
+	public:
+		virtual void SaveDefinition();
+	private:
+		virtual void GetDefinition();
+		virtual void SetDefinition();
+		virtual void SetDefID(short id);
+	public:
+		virtual bool GetObjectName(cIGZString* str);
+		virtual char* GetObjectNameChar();
+		virtual void SetObjectName(const char* name);
+		virtual void SetObjectNameField(const char* name);
+	private:
 		virtual void fn11();
 		virtual void fn12();
 		virtual void fn13();
@@ -832,6 +836,8 @@ namespace TS {
 	};
 
 	class cTSGameStateController : public cIGZUnknown {
+	public:
+		DllExport void FlipUI(int ui, int unk = 0, int unk2 = 0);
 	private:
 		// TODO - Also check the NonConst stuff.
 		virtual void Init();

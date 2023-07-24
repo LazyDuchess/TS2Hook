@@ -29,6 +29,12 @@ cRZString::cRZString()
     ((func*)0x00404e47)();
 }
 
+cRZString::cRZString(const char* str)
+{
+    typedef void __stdcall func(const char* str);
+    ((func*)0x00401272)(str);
+}
+
 cTSString::cTSString(short instanceID, int stringID, int groupID, int unknown)
 {
     typedef void __stdcall func(short instanceID, int stringID, int groupID, int unknown);
@@ -43,4 +49,17 @@ cTSString::~cTSString()
 cRZString::~cRZString()
 {
     free(str);
+}
+
+cRZMessage2Standard::cRZMessage2Standard()
+{
+    typedef void __stdcall func();
+    ((func*)0x0040fb17)();
+}
+
+namespace RZ {
+    cGZMessageServer2* MS2() {
+        typedef cGZMessageServer2* __stdcall func();
+        return ((func*)0x00ec1d3f)();
+    }
 }

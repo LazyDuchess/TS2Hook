@@ -128,6 +128,7 @@ class cRZString : public cIGZString {
 public:
 	// A Rizzo UTF-8 string.
 	DllExport cRZString();
+	DllExport cRZString(const char* str);
 	DllExport ~cRZString();
 	char pad[12];
 };
@@ -142,3 +143,25 @@ private:
 
 // Returns the game window.
 DllExport HWND GetGameWindow();
+
+class cGZMessageServer2 : public cIGZUnknown {
+private:
+	//virtual void fn0();
+	//virtual void fn1();
+	//virtual void fn2();
+public:
+
+};
+
+class cRZMessage2Standard : public cIGZUnknown {
+private:
+	//virtual void fn0();
+	//virtual void fn1();
+	//virtual void fn2();
+public:
+	DllExport cRZMessage2Standard();
+};
+
+namespace RZ {
+	DllExport cGZMessageServer2* MS2();
+}

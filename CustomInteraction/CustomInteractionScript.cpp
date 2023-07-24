@@ -21,7 +21,8 @@ void CustomInteractionScript::OnBuildUserDirectedInteractionMenu(std::vector<TS:
 	// Run the Interaction - Steal TEST check tree on the clicked object.
 	if (!pPersonAsObject->RunTree(pBehavior, objectId, 0x1003, 0, 0, 0, 0))
 		return;
-	int stringSetGroupID = pInteractionObject->GetSelector()->GetGroupID();
+	TS::cTSObjectSelector* pSelector = pInteractionObject->GetSelector();
+	int stringSetGroupID = pSelector->GetGroupID();
 	//int stringSetGroupID = 0x7FDC534B;
 	//cTSString* interactionName = new cTSString(0xAF2, 0, stringSetGroupID);
 	cTSString interactionName = cTSString(0xaf2,1,stringSetGroupID,0x2026960b);

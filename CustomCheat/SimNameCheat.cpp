@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "SimNameCheat.h"
+#include "../TS2Hook/UI.h"
 #include "../TS2Hook/Encoding.h"
 #include <sstream>
 
@@ -11,7 +12,7 @@ const char* SimNameCheat::Description(void* commandHelpType) {
 	return "Outputs the name of the selected Sim.";
 }
 
-void SimNameCheat::Execute(nGZCommandParser::cArguments* arguments) {
+void SimNameCheat::Execute(nGZCommandParser::cArguments* arguments) { 
 	TS::cTSGlobals* globals = TS::Globals();
 	if (globals != nullptr)
 	{
@@ -25,8 +26,11 @@ void SimNameCheat::Execute(nGZCommandParser::cArguments* arguments) {
 			cRZString lastName = cRZString();
 			selector->GetCatalogName(&firstName);
 			selector->GetCatalogDescription(&lastName);
-			MessageBox(NULL, firstName.GetWString().c_str(), L"Info", MB_OK);
-			MessageBox(NULL, lastName.GetWString().c_str(), L"Info", MB_OK);
+			std::wstring wFirstName = firstName.GetWString();
+			std::wstring wLastName = lastName.GetWString();
+			wFirstName.append(L" ");
+			wFirstName.append(wLastName);
+			MessageBox(NULL, wFirstName.c_str(), L"Info", MB_OK);
 		}
 	}
 }

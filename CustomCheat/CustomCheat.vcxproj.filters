@@ -36,6 +36,12 @@
     <ClInclude Include="SetGlobalCheat.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="FlipUICheat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageBoxCheat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -57,6 +63,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SetGlobalCheat.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FlipUICheat.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MessageBoxCheat.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

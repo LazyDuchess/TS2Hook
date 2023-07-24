@@ -44,6 +44,10 @@ void SetYACASLotName(const char* lotName)
 }
 namespace TS
 {
+	void cTSGameStateController::FlipUI(int ui, int unk, int unk2) {
+		typedef void __stdcall func(int ui, int unk, int unk2);
+		((func*)0x00eea5f1)(ui, unk, unk2);
+	}
 
 	cTSSimSystem* SimSystem()
 	{

@@ -4,12 +4,17 @@
 #include "ResetSimCheat.h"
 #include "GetGlobalCheat.h"
 #include "SetGlobalCheat.h"
+#include "FlipUICheat.h"
+#include "MessageBoxCheat.h"
 #include "../TS2Hook/Game.h"
+#include "../TS2Hook/UI.h"
 
 ResetSimCheat* gResetSimCheat = new ResetSimCheat();
 SimNameCheat* gSimNameCheat = new SimNameCheat();
 GetGlobalCheat* gGetGlobalCheat = new GetGlobalCheat();
 SetGlobalCheat* gSetGlobalCheat = new SetGlobalCheat();
+FlipUICheat* gFlipUICheat = new FlipUICheat();
+MessageBoxCheat* gMessageBoxCheat = new MessageBoxCheat();
 
 void CustomCheatScript::OnInit()
 {
@@ -20,5 +25,7 @@ void CustomCheatScript::OnInit()
 		cheatSystem->RegisterCheat(gSimNameCheat);
 		cheatSystem->RegisterCheat(gSetGlobalCheat);
 		cheatSystem->RegisterCheat(gGetGlobalCheat);
+		cheatSystem->RegisterCheat(gFlipUICheat);
+		cheatSystem->RegisterCheat(gMessageBoxCheat);
 	}
 }
