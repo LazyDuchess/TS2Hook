@@ -11,6 +11,7 @@ Requires the Direct3D SDK to build
 * `CustomInteraction` - Contains an .asi plugin that adds a custom interaction globally. Requires **"Downloads/ld_TS2Hook_CustomInteraction.package"**
 * `TS2Hook` - Code for the main DLL, all plugins in this project depend on it. Compiled .dll goes into the same place as your **Sims2EP9.exe** file.
 * `Downloads` - Packages with custom objects to test TS2Hook functionality.
+* `SimPe` - Move the contents of this directory into your SimPe installation directory, replacing the existing files, to change the names of Globals and Generic Sim Call in SimPe to reflect TS2Hook.
 * `TestScript` - Messy script to test TS2Hook functionality, mostly random notes, code snippets and experiments. Not included in the Solution by default.
 * `D3DHook` - [Universal D3D Hooking Library](https://www.unknowncheats.me/forum/direct3d/335041-universal-d3d-hooking-library.html) used to hook into the renderer to display text and run code every frame.
 
