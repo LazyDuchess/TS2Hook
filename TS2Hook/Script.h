@@ -26,7 +26,7 @@ public:
 	// Unique ID for this Script
 	virtual int GetID() = 0;
 	// When a Generic Sim Call 0x56 gets called from Edith, referencing this Script.
-	virtual EdithReturnValue OnEdithCall(cTSTreeStackElem* stack, XPrimParam* primitive) { return EdithReturnValue::False; };
+	virtual EdithReturnValue OnEdithCall(cTSTreeStackElem* stack, XPrimParam* primitive) { return EdithReturnValue::Unhandled; };
 	// Gets called when a lot finishes loading.
 	virtual void OnLotLoaded() {};
 	// Gets called when entering a neighborhood.
