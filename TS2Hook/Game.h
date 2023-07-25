@@ -735,17 +735,23 @@ namespace TS {
 		virtual void SetGlobal(short id, short value);
 	private:
 		virtual void fn17();
-		virtual void fn18();
+	public:
+		virtual int GetTicks();
+	private:
 		virtual void fn19();
-		virtual void fn20();
-		virtual void fn21();
+	public:
+		virtual void SetSpeed(short speed, bool message = true);
+		virtual short GetSpeed();
+	private:
 		virtual void fn22();
 		virtual void fn23();
-		virtual void fn24();
-		virtual void fn25();
-		virtual void fn26();
-		virtual void fn27();
-		virtual void fn28();
+	public:
+		virtual void Pause(bool message = true);
+		virtual void Resume(bool message = true);
+		virtual bool IsPaused();
+		virtual short GetMode();
+		virtual short SetMode(short mode, short subMode);
+	private:
 		virtual void fn29();
 		virtual void fn30();
 	};

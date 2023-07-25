@@ -13,10 +13,8 @@
 
 typedef long(__stdcall* tEndScene)(LPDIRECT3DDEVICE9);
 typedef long(__stdcall* tReset)(LPDIRECT3DDEVICE9);
-typedef long(__stdcall* tPresent)(LPDIRECT3DDEVICE9);
 tEndScene oD3D9EndScene = NULL;
 tReset oD3D9Reset = NULL;
-tPresent oD3D9Present = NULL;
 bool bExit = false;
 HMODULE gModule;
 
@@ -33,15 +31,6 @@ void Draw(LPDIRECT3DDEVICE9 pDevice)
     {
         script->Draw();
     }
-}
-
-long _stdcall hkD3D9Present(LPDIRECT3DDEVICE9 pDevice)
-{
-    for (Script* script : scripts)
-    {
-        script->Update();
-    }
-    return oD3D9Present(pDevice);
 }
 
 long _stdcall hkD3D9Reset(LPDIRECT3DDEVICE9 pDevice)
@@ -105,14 +94,157 @@ constexpr auto SIMULATOR_WRITE_END_HOOK_EXIT_ADDR = SIMULATOR_WRITE_END_HOOK_ADD
 constexpr auto TRYGENERICSIMCALL_HOOK_ADDR = 0x0094c3e0;
 constexpr auto TRYGENERICSIMCALL_HOOK_EXIT_ADDR = TRYGENERICSIMCALL_HOOK_ADDR + 5;
 
-void SetTS2HookInstalledGlobal(TS::cTSSimulator* simulator)
+// Hooking nTSSG::cTSSGSystem::OncePërFrameUpdate (Begin)
+constexpr auto ONCEPERFRAMEUPDATE_HOOK_ADDR = 0x00b271d0;
+constexpr auto ONCEPERFRAMEUPDATE_HOOK_EXIT_ADDR = ONCEPERFRAMEUPDATE_HOOK_ADDR + 6;
+
+// Hooking nTSSG::cTSSGSystem::PostLoadLot (End)
+constexpr auto POSTLOADLOT_HOOK_ADDR = 0x00B2F007;
+constexpr auto POSTLOADLOT_HOOK_EXIT_ADDR = POSTLOADLOT_HOOK_ADDR + 6;
+
+// nTSSG::cTSSGSystem::onNeighborhoodEntered (End)
+constexpr auto NEIGHBORHOODENTER_HOOK_ADDR = 0x00B2922D;
+constexpr auto NEIGHBORHOODENTER_HOOK_EXIT_ADDR = NEIGHBORHOODENTER_HOOK_ADDR + 6;
+
+// Hooking cTSWinProcMain::FlipToShellMode (End)
+constexpr auto FLIPTOSHELL_HOOK_ADDR = 0x0055b848;
+constexpr auto FLIPTOSHELL_HOOK_EXIT_ADDR = FLIPTOSHELL_HOOK_ADDR + 5;
+
+void __stdcall On_ShellEntered()
 {
-    simulator->SetGlobal(0x2, 1);
+    for (Script* script : scripts)
+    {
+        script->OnShellEntered();
+    }
 }
 
-void UnsetTS2HookInstalledGlobal(TS::cTSSimulator* simulator)
+void __declspec(naked) cTSWinProcMain_FlipToShellMode_Hook()
 {
-    simulator->SetGlobal(0x2, 0);
+    __asm {
+        push edi
+        push eax
+        push edx
+        push ecx
+        push ebp
+        push ebx
+        push esi
+
+        call On_ShellEntered
+
+        pop esi
+        pop ebx
+        pop ebp
+        pop ecx
+        pop edx
+        pop eax
+        pop edi
+        // Original
+        pop ebx
+        leave
+        ret 8
+    }
+}
+
+void __stdcall On_NeighborhoodEntered()
+{
+    for (Script* script : scripts)
+    {
+        script->OnNeighborhoodEntered();
+    }
+}
+
+void __declspec(naked) cTSSGSystem_NeighborhoodEntered_Hook()
+{
+    __asm {
+        push edi
+        push eax
+        push edx
+        push ecx
+        push ebp
+        push ebx
+        push esi
+
+        call On_NeighborhoodEntered
+
+        pop esi
+        pop ebx
+        pop ebp
+        pop ecx
+        pop edx
+        pop eax
+        pop edi
+        // Original
+        add esp, 0x2C
+        ret 8
+    }
+}
+
+void __stdcall On_PostLoadLot()
+{
+    for (Script* script : scripts)
+    {
+        script->OnLotLoaded();
+    }
+}
+
+void __declspec(naked) cTSSGSystem_PostLoadLot_Hook()
+{
+    __asm {
+        push edi
+        push eax
+        push edx
+        push ecx
+        push ebp
+        push ebx
+        push esi
+
+        call On_PostLoadLot
+
+        pop esi
+        pop ebx
+        pop ebp
+        pop ecx
+        pop edx
+        pop eax
+        pop edi
+        // Original
+        add esp, 0x2C
+        ret 4
+    }
+}
+
+void __stdcall On_OncePerFrameUpdate()
+{
+    for (Script* script : scripts)
+    {
+        script->Update();
+    }
+}
+
+void __declspec(naked) cTSSGSystem_OncePerFrameUpdate_Hook()
+{
+    __asm {
+        push edi
+        push eax
+        push edx
+        push ecx
+        push ebp
+        push ebx
+        push esi
+
+        call On_OncePerFrameUpdate
+
+        pop esi
+        pop ebx
+        pop ebp
+        pop ecx
+        pop edx
+        pop eax
+        pop edi
+        // Original
+        mov eax,fs:[0]
+        jmp ONCEPERFRAMEUPDATE_HOOK_EXIT_ADDR
+    }
 }
 
 EdithReturnValue __stdcall On_TryGenericSimCall(cTSTreeStackElem* stack, XPrimParam* primitive)
@@ -176,6 +308,16 @@ void __declspec(naked) On_TryGenericSimCall_Hook()
 
         jmp TRYGENERICSIMCALL_HOOK_EXIT_ADDR
     }
+}
+
+void SetTS2HookInstalledGlobal(TS::cTSSimulator* simulator)
+{
+    simulator->SetGlobal(0x2, 1);
+}
+
+void UnsetTS2HookInstalledGlobal(TS::cTSSimulator* simulator)
+{
+    simulator->SetGlobal(0x2, 0);
 }
 
 void __stdcall On_cTSSimulator_InitShared(TS::cTSSimulator* simulator)
@@ -458,6 +600,10 @@ void ScriptManager::Initialize(HMODULE hModule)
     Hooking::MakeJMP((BYTE*)SIMULATOR_WRITE_BEGIN_HOOK_ADDR, (DWORD)cTSSimulator_Write_Begin_Hook, 5);
     Hooking::MakeJMP((BYTE*)SIMULATOR_WRITE_END_HOOK_ADDR, (DWORD)cTSSimulator_Write_End_Hook, 5);
     Hooking::MakeJMP((BYTE*)TRYGENERICSIMCALL_HOOK_ADDR, (DWORD)On_TryGenericSimCall_Hook, 5);
+    Hooking::MakeJMP((BYTE*)ONCEPERFRAMEUPDATE_HOOK_ADDR, (DWORD)cTSSGSystem_OncePerFrameUpdate_Hook, 6);
+    Hooking::MakeJMP((BYTE*)POSTLOADLOT_HOOK_ADDR, (DWORD)cTSSGSystem_PostLoadLot_Hook, 6);
+    Hooking::MakeJMP((BYTE*)NEIGHBORHOODENTER_HOOK_ADDR, (DWORD)cTSSGSystem_NeighborhoodEntered_Hook, 6);
+    Hooking::MakeJMP((BYTE*)FLIPTOSHELL_HOOK_ADDR, (DWORD)cTSWinProcMain_FlipToShellMode_Hook, 5);
     //Hooking::MakeJMP((BYTE*)SIMULATOR_GETGLOBAL_HOOK_ADDR, (DWORD)cTSSimulator_GetGlobal_Hook, 5);
 	gModule = hModule;
     CreateThread(nullptr, 0, [](LPVOID) -> DWORD
@@ -470,7 +616,6 @@ void ScriptManager::Initialize(HMODULE hModule)
         
         methodesHook(42, hkD3D9EndScene, (LPVOID*)&oD3D9EndScene); // hook endscene
         methodesHook(16, hkD3D9Reset, (LPVOID*)&oD3D9Reset);
-        methodesHook(17, hkD3D9Present, (LPVOID*)&oD3D9Present);
 
         while (!bExit)
         {
