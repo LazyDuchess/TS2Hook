@@ -267,7 +267,7 @@ EdithReturnValue __stdcall On_TryGenericSimCall(cTSTreeStackElem* stack, XPrimPa
             if (script->GetID() == uid)
                 return script->OnEdithCall(stack, primitive);
         }
-        return EdithReturnValue::False;
+        return EdithReturnValue::Unhandled;
     }
     return EdithReturnValue::Unhandled;
 }
