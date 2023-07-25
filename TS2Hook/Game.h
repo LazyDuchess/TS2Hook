@@ -751,7 +751,6 @@ namespace TS {
 		virtual bool IsPaused();
 		virtual short GetMode();
 		virtual short SetMode(short mode, short subMode);
-	private:
 		virtual int GetFunds();
 		virtual void SetFunds(int funds);
 	};
