@@ -6,6 +6,7 @@ Requires a No-CD version of Sims 2 Mansion & Garden to work, or Sims2RPC.
 Requires the Direct3D SDK to build
 
 ## Structure
+* `CustomSimCall` - Contains an .asi plugin that adds a custom SimAntics function to the game. Used by **"Downloads/ld_TS2Hook_TestObject.package"**
 * `CustomCheat` - Contains an .asi plugin that adds custom cheats to the in-game console.
 * `CustomInteraction` - Contains an .asi plugin that adds a custom interaction globally. Requires **"Downloads/ld_TS2Hook_CustomInteraction.package"**
 * `TS2Hook` - Code for the main DLL, all plugins in this project depend on it. Compiled .dll goes into the same place as your **Sims2EP9.exe** file.
