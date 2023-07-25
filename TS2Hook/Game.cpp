@@ -85,6 +85,11 @@ namespace TS
 		return ((func*)0x008a4fc0)(interactions, person, object, immediate, flags, name, instanceId);
 	}
 
+	cTSMainToolbar* MainToolbar() {
+		typedef cTSMainToolbar* func(void);
+		return ((func*)0x00799a38)();
+	}
+
 	cRZLanguageManager* LanguageManager() {
 		typedef cRZLanguageManager* func(void);
 		return ((func*)0x00799cfa)();

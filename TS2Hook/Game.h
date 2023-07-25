@@ -955,7 +955,105 @@ namespace TS {
 		cTSObject* object;
 	};
 
+	class cTSMainToolbar : public cIGZUnknown {
+	private:
+		//virtual void fn0();
+		//virtual void fn1();
+		//virtual void fn2();
+		virtual void Init();
+	public:
+		virtual void MarkDirty();
+		virtual bool Dirty();
+		virtual bool ImposterDirty();
+	private:
+		virtual void Save();
+		virtual void Load();
+	public:
+		virtual void InitForNewLot();
+	private:
+		virtual void fn10();
+		virtual void fn11();
+		virtual void SetViewWindow();
+		virtual void GetViewWindow();
+		virtual void fn14();
+		virtual void fn15();
+		virtual void SetSimulatorSpeed();
+		virtual void GetSimulatorSpeed();
+		virtual void fn18();
+		virtual void fn19();
+		virtual void fn20();
+		virtual void fn21();
+		virtual void fn22();
+		virtual void fn23();
+		virtual void fn24();
+		virtual void fn25();
+		virtual void fn26();
+		virtual void fn27();
+		virtual void fn28();
+		virtual void fn29();
+		virtual void fn30();
+		virtual void fn31();
+		virtual void fn32();
+		virtual void fn33();
+		virtual void fn34();
+		virtual void fn35();
+		virtual void fn36();
+		virtual void fn37();
+		virtual void fn38();
+		virtual void fn39();
+		virtual void fn40();
+		virtual void fn41();
+		virtual void fn42();
+		virtual void fn43();
+		virtual void fn44();
+		virtual void fn45();
+		virtual void fn46();
+		virtual void fn47();
+		virtual void fn48();
+		virtual void fn49();
+		virtual void fn50();
+		virtual void fn51();
+		virtual void fn52();
+		virtual void fn53();
+		virtual void fn54();
+		virtual void fn55();
+		virtual void fn56();
+	public:
+		virtual bool ShouldSnapObjectsToGrid();
+		virtual int QuarterTileFloorPatternMode();
+	private:
+		virtual void SetIndividualRoofSlopeMode();
+		virtual void IndividualRoofSlopeMode();
+		virtual void SelectBuyModeTool();
+		virtual void PurchaseObject();
+		virtual void SetWholesaleMode();
+		virtual void WholesaleMode();
+		virtual void LastOpenedWholesaleMode();
+		virtual void CurrentPriceParam();
+		virtual void SetCurrentPriceParam();
+		virtual void ChangePriceParam();
+	public:
+		virtual void CycleTimeOfDay();
+	private:
+		virtual void fn70();
+		virtual void GetIsTopDownView();
+		virtual void SetTopDownView();
+		virtual void GetIsCeilingView();
+		virtual void fn74();
+		virtual void SelectNeighborhoodTool();
+		virtual void LevelAndPositionAtGameWindowPoint();
+		virtual void ReinitializeToolSystem();
+		virtual void AddDefaultTools();
+		virtual void RemoveDefaultTools();
+		virtual void ViewMin();
+		virtual void DoSimsModalDialog();
+		virtual void MessageDialog();
+	};
+
+	DllExport cTSMainToolbar* MainToolbar();
+
 	DllExport cTSGameStateController* GameStateController();
+
 	void DllExport AddCheatInteraction(std::vector<cTSInteraction*>* interactions, cTSPerson* person, cTSObject* object, InteractionType immediate, short flags, const char* name, short instanceId);
 
 	DllExport cRZLanguageManager* LanguageManager();
