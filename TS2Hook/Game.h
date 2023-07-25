@@ -752,8 +752,8 @@ namespace TS {
 		virtual short GetMode();
 		virtual short SetMode(short mode, short subMode);
 	private:
-		virtual void fn29();
-		virtual void fn30();
+		virtual int GetFunds();
+		virtual void SetFunds(int funds);
 	};
 
 	class cTSNeighbor : public cIGZUnknown {
