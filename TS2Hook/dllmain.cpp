@@ -10,6 +10,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
     switch (ul_reason_for_call)
     {
     case DLL_PROCESS_ATTACH:
+        // Disable unnecessary calls
         DisableThreadLibraryCalls(hModule);
         ScriptManager::Initialize(hModule);
         break;
