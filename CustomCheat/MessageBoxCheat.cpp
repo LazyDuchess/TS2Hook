@@ -14,6 +14,10 @@ const char* MessageBoxCheat::Description(void* commandHelpType) {
 }
 
 void MessageBoxCheat::Execute(nGZCommandParser::cArguments* arguments) {
-	cRZString boxMessage = cRZString((*arguments)[1]);
-	nTSUI::MessageBoxOK(&boxMessage);
+	if (arguments->count < 2)
+		return;
+	cRZString boxTitle = cRZString((*arguments)[1]);
+	cRZString boxMessage = cRZString((*arguments)[2]);
+	auto toolbar = TS::MainToolbar();
+	auto result = toolbar->MessageDialog(&boxMessage, &boxTitle, TS::DialogType::YesNoCancel);
 }

@@ -955,6 +955,27 @@ namespace TS {
 		cTSObject* object;
 	};
 
+	enum class DialogType {
+		Ok,
+		OkCancel,
+		RetryCancel,
+		YesNo,
+		YesNoCancel,
+		AbortRetryIgnore,
+		DriveWalkCancel,
+		DriveFlyCancel
+	};
+
+	enum class DialogResult {
+		Ok = 0x5301814A,
+		Yes = 0x5301814C,
+		No = 0x53018149,
+		Cancel = 0x53018147,
+		Retry = 0x5301814B,
+		Abort = 0x53018146,
+		Ignore = 0x53018148
+	};
+
 	class cTSMainToolbar : public cIGZUnknown {
 	private:
 		//virtual void fn0();
@@ -1047,7 +1068,8 @@ namespace TS {
 		virtual void RemoveDefaultTools();
 		virtual void ViewMin();
 		virtual void DoSimsModalDialog();
-		virtual void MessageDialog();
+	public:
+		virtual DialogResult MessageDialog(cIGZString* body, cIGZString* title, DialogType type = DialogType::Ok, int unk2 = 0, int unk3 = 0);
 	};
 
 	DllExport cTSMainToolbar* MainToolbar();
