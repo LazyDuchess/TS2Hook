@@ -630,3 +630,13 @@ void ScriptManager::Register(Script* script)
 {
 	scripts.push_back(script);
 }
+
+Script* ScriptManager::GetScript(int id)
+{
+    for (Script* script : scripts)
+    {
+        if (script->GetID() == id)
+            return script;
+    }
+    return nullptr;
+}
