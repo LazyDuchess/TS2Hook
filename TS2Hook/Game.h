@@ -755,6 +755,13 @@ namespace TS {
 		//virtual void fn0();
 		//virtual void fn1();
 		//virtual void fn2();
+		virtual void fn3();
+		virtual void fn4();
+		virtual void fn5();
+		virtual void fn6();
+		virtual void fn7();
+	public:
+		virtual short GetID();
 	};
 
 	class cTSNeighborManager : public cIGZUnknown {
