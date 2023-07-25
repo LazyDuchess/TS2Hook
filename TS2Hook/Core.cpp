@@ -7,7 +7,7 @@ BOOL CALLBACK EnumWindowsCallback(HWND hwnd, LPARAM lParam)
 {
     DWORD lpdwProcessId;
     GetWindowThreadProcessId(hwnd, &lpdwProcessId);
-    if (lpdwProcessId == lParam)
+    if (IsWindowVisible(hwnd) && lpdwProcessId == lParam)
     {
         gHWND = hwnd;
         return FALSE;

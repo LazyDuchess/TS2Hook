@@ -597,8 +597,8 @@ namespace TS {
 	// Not finished
 	class cTSCheatParser {
 	public:
-		void ExecuteCommand(char* command) {
-			typedef void func(cTSCheatParser*, char*);
+		void ExecuteCommand(const char* command) {
+			typedef void func(cTSCheatParser*, const char*);
 			return ((func*)0x00b211b0)(this, command);
 		};
 	};
