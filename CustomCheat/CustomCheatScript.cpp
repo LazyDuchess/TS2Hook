@@ -6,6 +6,7 @@
 #include "SetGlobalCheat.h"
 #include "FlipUICheat.h"
 #include "MessageBoxCheat.h"
+#include "DeleteSimCheat.h"
 #include "../TS2Hook/Game.h"
 #include "../TS2Hook/UI.h"
 

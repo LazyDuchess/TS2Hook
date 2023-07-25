@@ -545,8 +545,8 @@ namespace TS {
 		virtual void MakeNewOutOfWorldObject();
 	public:
 		virtual void KillObject(short objectID);
+		virtual void AddToKillQueue(short objectID);
 	private:
-		virtual void AddToKillQueue();
 		virtual void AddToKillQueueWhenNoLongerInUseQueue();
 		virtual void KillObjectsInvalidatedByResize();
 		virtual void FlushKillQueue();
@@ -750,6 +750,61 @@ namespace TS {
 		virtual void fn30();
 	};
 
+	class cTSNeighbor : public cIGZUnknown {
+	private:
+		//virtual void fn0();
+		//virtual void fn1();
+		//virtual void fn2();
+	};
+
+	class cTSNeighborManager : public cIGZUnknown {
+	private:
+		//virtual void fn0();
+		//virtual void fn1();
+		//virtual void fn2();
+		virtual void fn3();
+		virtual void fn4();
+		virtual void fn5();
+		virtual void fn6();
+		virtual void fn7();
+		virtual void fn8();
+		virtual void fn9();
+		virtual void fn10();
+		virtual void fn11();
+		virtual void fn12();
+		virtual void fn13();
+		virtual void fn14();
+		virtual void fn15();
+		virtual void fn16();
+	public:
+		virtual cTSNeighbor* FindNeighborByGUID(int guid);
+	private:
+		virtual void fn18();
+		virtual void fn19();
+		virtual void fn20();
+	public:
+		virtual void DeleteCharacter(cTSNeighbor* character);
+	private:
+		virtual void fn22();
+		virtual void fn23();
+		virtual void fn24();
+		virtual void fn25();
+		virtual void fn26();
+		virtual void fn27();
+		virtual void fn28();
+		virtual void fn29();
+		virtual void fn30();
+		virtual void fn31();
+		virtual void fn32();
+		virtual void fn33();
+		virtual void fn34();
+		virtual void fn35();
+		virtual void fn36();
+		virtual void fn37();
+		virtual void fn38();
+		virtual void fn39();
+	};
+
 	class cTSGlobals : public cIGZUnknown {
 	private:
 		char pad[28];
@@ -770,7 +825,9 @@ namespace TS {
 		virtual void GetNeighborhoodGroupData();
 		virtual void NeighborhoodManager();
 		virtual void FamilyManager();
-		virtual void NeighborManager();
+	public:
+		virtual cTSNeighborManager* NeighborManager();
+	private:
 		virtual void NeighborhoodTerrain();
 		virtual void NeighborhoodOccupantManager();
 		virtual void GetLot();
