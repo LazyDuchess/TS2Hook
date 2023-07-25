@@ -30,7 +30,8 @@ void SimNameCheat::Execute(nGZCommandParser::cArguments* arguments) {
 			std::wstring wLastName = lastName.GetWString();
 			wFirstName.append(L" ");
 			wFirstName.append(wLastName);
-			MessageBox(NULL, wFirstName.c_str(), L"Info", MB_OK);
+			cRZString tocrzstr = cRZString(Encoding::WStringToUTF8(wFirstName).c_str());
+			nTSUI::MessageBoxOK(&tocrzstr);
 		}
 	}
 }

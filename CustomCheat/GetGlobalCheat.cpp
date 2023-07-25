@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "GetGlobalCheat.h"
 #include "../TS2Hook/Encoding.h"
+#include "../TS2Hook/UI.h"
 
 const char* GetGlobalCheat::Name() {
 	return "getGlobal";
@@ -22,5 +23,6 @@ void GetGlobalCheat::Execute(nGZCommandParser::cArguments* arguments) {
 	if (pSimulator == nullptr)
 		return;
 	std::wstring globalValue = std::to_wstring(pSimulator->GetGlobal(globalID));
-	MessageBox(NULL, globalValue.c_str(), L"Info", MB_OK);
+	cRZString tocrzstr = cRZString(Encoding::WStringToUTF8(globalValue).c_str());
+	nTSUI::MessageBoxOK(&tocrzstr);
 }

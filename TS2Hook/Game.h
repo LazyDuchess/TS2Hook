@@ -168,8 +168,10 @@ namespace TS {
 		virtual void Function16();
 		virtual void Function17();
 		virtual void Function18();
-		virtual void Function19();
-		virtual void Function20();
+	public:
+		virtual short GetTemp(short tempID);
+		virtual void SetTemp(short tempID, short value);
+	private:
 		virtual void Function21();
 		virtual void Function22();
 		virtual void Function23();
@@ -557,9 +559,9 @@ namespace TS {
 		virtual void MinuteChanged();
 		virtual void HourChanged();
 		virtual void DayChanged();
-		virtual void GetObjectFromID();
-		virtual void GetValidatedObjectFromID();
 	public:
+		virtual cTSObject* GetObjectFromID(short objectID);
+		virtual cTSObject* GetValidatedObjectFromID(short objectID);
 		// I wonder why they're using a linked list for this.
 		virtual LinkedList<cTSObject>* GetObjectList();
 	private:

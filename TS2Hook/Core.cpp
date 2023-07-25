@@ -59,7 +59,7 @@ cRZMessage2Standard::cRZMessage2Standard()
 
 namespace RZ {
     cGZMessageServer2* MS2() {
-        typedef cGZMessageServer2* __stdcall func();
+        typedef cGZMessageServer2* func();
         return ((func*)0x00ec1d3f)();
     }
 }

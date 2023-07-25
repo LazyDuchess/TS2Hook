@@ -3,7 +3,7 @@
 
 namespace nTSUI {
 	void MessageBoxOK(cIGZString* message) {
-		typedef void __stdcall func(cIGZString* message);
+		typedef void func(cIGZString* message);
 		((func*)0x005bbcca)(message);
 	}
 }

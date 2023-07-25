@@ -2,6 +2,12 @@
 #include "CustomInteractionScript.h"
 #include "../TS2Hook/Input.h"
 
+int CustomInteractionScript::GetID()
+{
+	static const int hash = 0xC3068C58;
+	return hash;
+}
+
 void CustomInteractionScript::OnBuildUserDirectedInteractionMenu(std::vector<TS::cTSInteraction*>* interactions, TS::cEdithObjectTestSim* testSim, bool debug) {
 	if (debug)
 		return;

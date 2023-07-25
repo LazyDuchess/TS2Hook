@@ -4,4 +4,5 @@
 class CustomCheatScript : public Script {
 public:
 	void OnInit();
+	int GetID();
 };

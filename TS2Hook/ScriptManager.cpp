@@ -5,6 +5,7 @@
 #include <d3d9.h> 
 #include <d3dx9.h>
 #include <string>
+#include "Edith.h"
 #include "Drawing.h"
 #include "Hooking.h"
 #pragma comment(lib, "D3D Hook x86.lib")
@@ -100,6 +101,10 @@ constexpr auto SIMULATOR_WRITE_BEGIN_HOOK_EXIT_ADDR = SIMULATOR_WRITE_BEGIN_HOOK
 constexpr auto SIMULATOR_WRITE_END_HOOK_ADDR = 0x008728da;
 constexpr auto SIMULATOR_WRITE_END_HOOK_EXIT_ADDR = SIMULATOR_WRITE_END_HOOK_ADDR + 5;
 
+// Hooking TryGenericSimCall (Begin)
+constexpr auto TRYGENERICSIMCALL_HOOK_ADDR = 0x0094c3e0;
+constexpr auto TRYGENERICSIMCALL_HOOK_EXIT_ADDR = TRYGENERICSIMCALL_HOOK_ADDR + 5;
+
 void SetTS2HookInstalledGlobal(TS::cTSSimulator* simulator)
 {
     simulator->SetGlobal(0x2, 1);
@@ -108,6 +113,69 @@ void SetTS2HookInstalledGlobal(TS::cTSSimulator* simulator)
 void UnsetTS2HookInstalledGlobal(TS::cTSSimulator* simulator)
 {
     simulator->SetGlobal(0x2, 0);
+}
+
+EdithReturnValue __stdcall On_TryGenericSimCall(cTSTreeStackElem* stack, XPrimParam* primitive)
+{
+    char call = primitive->GetChar(0);
+    int uid = primitive->GetInt(1);
+    if (call == 0x55)
+    {
+        for (Script* script : scripts)
+        {
+            if (script->GetID() == uid)
+                return EdithReturnValue::True;
+        }
+        return EdithReturnValue::False;
+    }
+    else if (call == 0x56)
+    {
+        for (Script* script : scripts)
+        {
+            if (script->GetID() == uid)
+                return script->OnEdithCall(stack, primitive);
+        }
+        return EdithReturnValue::False;
+    }
+    return EdithReturnValue::Unhandled;
+}
+
+void __declspec(naked) On_TryGenericSimCall_Hook()
+{
+    __asm {
+        push edi
+        push edx
+        push ecx
+        push ebp
+        push ebx
+        push esi
+
+        //args, last pushed first
+        //xprimparam
+        push[esp + 24+8]
+        //ctstreestackelem
+        push[esp + 28+4]
+
+        call On_TryGenericSimCall
+        pop esi
+        pop ebx
+        pop ebp
+        pop ecx
+        pop edx
+        pop edi
+
+        // EdithReturnValue::Unhandled
+        cmp eax, 0x2
+        je OnUnhandled
+        ret 0x8
+        OnUnhandled:
+        // Original
+        push ebp
+        mov ebp, esp
+        push -01
+
+        jmp TRYGENERICSIMCALL_HOOK_EXIT_ADDR
+    }
 }
 
 void __stdcall On_cTSSimulator_InitShared(TS::cTSSimulator* simulator)
@@ -389,6 +457,7 @@ void ScriptManager::Initialize(HMODULE hModule)
     Hooking::MakeJMP((BYTE*)SIMULATOR_READ_HOOK_ADDR, (DWORD)cTSSimulator_Read_Hook, 5);
     Hooking::MakeJMP((BYTE*)SIMULATOR_WRITE_BEGIN_HOOK_ADDR, (DWORD)cTSSimulator_Write_Begin_Hook, 5);
     Hooking::MakeJMP((BYTE*)SIMULATOR_WRITE_END_HOOK_ADDR, (DWORD)cTSSimulator_Write_End_Hook, 5);
+    Hooking::MakeJMP((BYTE*)TRYGENERICSIMCALL_HOOK_ADDR, (DWORD)On_TryGenericSimCall_Hook, 5);
     //Hooking::MakeJMP((BYTE*)SIMULATOR_GETGLOBAL_HOOK_ADDR, (DWORD)cTSSimulator_GetGlobal_Hook, 5);
 	gModule = hModule;
     CreateThread(nullptr, 0, [](LPVOID) -> DWORD

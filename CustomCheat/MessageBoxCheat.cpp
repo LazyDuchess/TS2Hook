@@ -13,15 +13,7 @@ const char* MessageBoxCheat::Description(void* commandHelpType) {
 	return "Shows a message box.";
 }
 
-cRZString* boxMessage = nullptr;
-
 void MessageBoxCheat::Execute(nGZCommandParser::cArguments* arguments) {
-	boxMessage = new cRZString((*arguments)[1]);
-    CreateThread(nullptr, 0, [](LPVOID) -> DWORD
-        {
-			
-			nTSUI::MessageBoxOK(boxMessage);
-			ExitThread(0);
-        }, nullptr, 0, nullptr);
-	
+	cRZString boxMessage = cRZString((*arguments)[1]);
+	nTSUI::MessageBoxOK(&boxMessage);
 }

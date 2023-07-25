@@ -1,9 +1,9 @@
 // dllmain.cpp : Defines the entry point for the DLL application.
 #include "pch.h"
-#include "CustomInteractionScript.h"
+#include "CustomSimCallScript.h"
 #include "../TS2Hook/ScriptManager.h"
 
-static CustomInteractionScript gCustomInteractionScript;
+static CustomSimCallScript gCustomSimCallScript;
 
 BOOL APIENTRY DllMain( HMODULE hModule,
                        DWORD  ul_reason_for_call,
@@ -14,7 +14,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
     {
     case DLL_PROCESS_ATTACH:
         DisableThreadLibraryCalls(hModule);
-        ScriptManager::Register(&gCustomInteractionScript);
+        ScriptManager::Register(&gCustomSimCallScript);
         break;
     case DLL_THREAD_ATTACH:
     case DLL_THREAD_DETACH:

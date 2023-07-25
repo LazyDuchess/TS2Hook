@@ -16,6 +16,12 @@ SetGlobalCheat* gSetGlobalCheat = new SetGlobalCheat();
 FlipUICheat* gFlipUICheat = new FlipUICheat();
 MessageBoxCheat* gMessageBoxCheat = new MessageBoxCheat();
 
+int CustomCheatScript::GetID()
+{
+	static const int hash = 0x98BEDB51;
+	return hash;
+}
+
 void CustomCheatScript::OnInit()
 {
 	TS::cTSCheatSystem* cheatSystem = TS::CheatSystem();
