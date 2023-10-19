@@ -33,6 +33,25 @@ namespace TS {
 
 	};
 
+	class cTSCatalogResource : public cIGZUnknown {
+	private:
+		//virtual void fn0();
+		//virtual void fn1();
+		//virtual void fn2();
+		virtual void Load();
+		virtual void Save();
+	public:
+		virtual void GetName(cIGZString* str);
+	private:
+		virtual void fn6();
+	public:
+		virtual void GetSecondaryName(cIGZString* str);
+	private:
+		virtual void fn8();
+	public:
+		virtual void GetDescription(cIGZString* str);
+	};
+
 	class cTSObjectSelector : public cIGZUnknown {
 	private:
 		//virtual void fn0();
@@ -100,7 +119,9 @@ namespace TS {
 	private:
 		virtual void fn52();
 		virtual void fn53();
-		virtual void fn54();
+	public:
+		virtual cTSCatalogResource* GetCatalogResource();
+	private:
 		virtual void fn55();
 		virtual void fn56();
 		virtual void fn57();
