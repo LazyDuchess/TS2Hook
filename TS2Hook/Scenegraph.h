@@ -28,7 +28,7 @@ namespace nTSSG {
 		virtual void FindTerrainColour2();
 		virtual void SetAutoLightingActive();
 	public:
-		virtual void SetLightingState(char* state);
+		virtual void SetLightingState(const char* state);
 		virtual void ForceLightingUpdate();
 	private:
 		virtual void AddBlobToHeightMap();

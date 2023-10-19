@@ -19,5 +19,9 @@ void MessageBoxCheat::Execute(nGZCommandParser::cArguments* arguments) {
 	cRZString boxTitle = cRZString((*arguments)[1]);
 	cRZString boxMessage = cRZString((*arguments)[2]);
 	auto toolbar = TS::MainToolbar();
-	auto result = toolbar->MessageDialog(&boxMessage, &boxTitle, TS::DialogType::YesNoCancel);
+	auto result = toolbar->MessageDialog(&boxMessage, &boxTitle, TS::DialogType::YesNo);
+	if (result == TS::DialogResult::Yes)
+	{
+		// do something
+	}
 }

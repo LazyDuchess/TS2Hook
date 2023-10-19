@@ -406,9 +406,9 @@ namespace TS {
 		virtual void Function238();
 		virtual void Function239();
 	public:
-		virtual bool RunTree(cTSBehavior* behavior, short objectID, short treeID, short param1, short param2, short param3, short param4);
+		virtual bool RunTree(cTSBehavior* behavior, short objectID, short treeID, short param1 = 0, short param2 = 0, short param3 = 0, short param4 = 0);
 		// Runs a tree immediately by its BHAV name, in Private -> Semiglobal -> Global scopes. Not sure about the args.
-		virtual bool RunTreeByName(cTSBehavior* behavior, short objectID, const char* behaviorName, short param1, short param2, short param3, short param4);
+		virtual bool RunTreeByName(cTSBehavior* behavior, short objectID, const char* behaviorName, short param1 = 0, short param2 = 0, short param3 = 0, short param4 = 0);
 	}; //Size: 0x0004
 
 	class cTSInteraction : public cIGZUnknown {
@@ -767,6 +767,10 @@ namespace TS {
 		virtual void fn7();
 	public:
 		virtual short GetID();
+	private:
+		virtual void fn9(); //GetID again.
+	public:
+		virtual cTSObjectSelector* GetSelector();
 	};
 
 	class cTSNeighborManager : public cIGZUnknown {
@@ -787,8 +791,8 @@ namespace TS {
 		virtual void fn13();
 		virtual void fn14();
 		virtual void fn15();
-		virtual void fn16();
 	public:
+		virtual cTSNeighbor* FindNeighborByID(int id, bool unk = true);
 		virtual cTSNeighbor* FindNeighborByGUID(int guid);
 	private:
 		virtual void fn18();

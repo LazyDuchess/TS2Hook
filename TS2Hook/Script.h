@@ -6,7 +6,7 @@
 class Script {
 public:
 	// Called every frame.
-	virtual void Update() {};
+	virtual void Update(float deltaTime) {};
 	// Called every frame, after all of the game rendering is done.
 	virtual void Draw() {};
 	// Called on initialization. Register cheats and such here.

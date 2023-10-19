@@ -8,8 +8,14 @@
 #include "Edith.h"
 #include "Drawing.h"
 #include "Hooking.h"
+#include <chrono>
 #pragma comment(lib, "D3D Hook x86.lib")
 #pragma comment(lib, "d3dx9.lib")
+
+typedef std::chrono::high_resolution_clock hr_clock;
+hr_clock::time_point lastFrameTime;
+bool firstFrameTicked = false;
+bool drawText = true;
 
 typedef long(__stdcall* tEndScene)(LPDIRECT3DDEVICE9);
 typedef long(__stdcall* tReset)(LPDIRECT3DDEVICE9);
@@ -23,10 +29,13 @@ std::vector<Script*> scripts;
 void Draw(LPDIRECT3DDEVICE9 pDevice)
 {
     Drawing::OnDraw(pDevice);
-    std::wstring infoString = L"TS2Hook (";
-    infoString.append(std::to_wstring(scripts.size()));
-    infoString.append(L" scripts loaded)");
-    Drawing::DrawTxt(infoString.c_str(), Drawing::Color(255,255,255), 20, 20);
+    if (drawText)
+    {
+        std::wstring infoString = L"TS2Hook (";
+        infoString.append(std::to_wstring(scripts.size()));
+        infoString.append(L" scripts loaded)");
+        Drawing::DrawTxt(infoString.c_str(), Drawing::Color(255, 255, 255), 20, 20);
+    }
     for (Script* script : scripts)
     {
         script->Draw();
@@ -147,6 +156,7 @@ void __declspec(naked) cTSWinProcMain_FlipToShellMode_Hook()
 
 void __stdcall On_NeighborhoodEntered()
 {
+    drawText = false;
     for (Script* script : scripts)
     {
         script->OnNeighborhoodEntered();
@@ -181,6 +191,7 @@ void __declspec(naked) cTSSGSystem_NeighborhoodEntered_Hook()
 
 void __stdcall On_PostLoadLot()
 {
+    drawText = false;
     for (Script* script : scripts)
     {
         script->OnLotLoaded();
@@ -215,9 +226,17 @@ void __declspec(naked) cTSSGSystem_PostLoadLot_Hook()
 
 void __stdcall On_OncePerFrameUpdate()
 {
+    auto thisFrameTime = hr_clock::now();
+    if (!firstFrameTicked)
+    {
+        lastFrameTime = thisFrameTime;
+        firstFrameTicked = true;
+    }
+    float deltaTime = std::chrono::duration<float>(thisFrameTime - lastFrameTime).count();
+    lastFrameTime = thisFrameTime;
     for (Script* script : scripts)
     {
-        script->Update();
+        script->Update(deltaTime);
     }
 }
 
